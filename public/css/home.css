@@ -1,0 +1,371 @@
+
+.hero-section {
+  background-color: #ffe4d1c3;
+  padding: 80px 0;
+  height: 745px;
+   position: relative;
+ 
+}
+
+.text-one  {
+    margin-top: 20px;
+    color: #555555;
+    font-size: 22px;
+    line-height: 1.5;
+}
+
+
+.search-section {
+  background: white;
+  padding-top: 80px;
+}
+
+.search-box-wrapper {
+  position: relative;
+}
+
+.search-box {
+  background: white;
+  padding: 20px 25px;
+  border-radius: 15px;
+  box-shadow: 0px 8px 25px rgba(0,0,0,0.08);
+
+  
+  position: absolute;
+  top: -170px;        
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1290px;
+    z-index: 10;
+}
+
+
+
+
+.hero-text h1 { font-weight: 700;
+  font-size: 70px; 
+  line-height: 1.2; 
+}
+.hero-text h1 span { color: #ff7a00; }
+
+.search-box {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-top: 40px;
+}
+.search-box input,
+.search-box select {
+  border: none;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+}
+
+.text-searchone {
+    font-size: 30px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.text-mutedtwo {
+    font-size: 22px;
+    color: #000000;
+}
+
+
+.card-kost img { border-radius: 10px; }
+
+.feature-icon {
+  font-size: 30px;
+  color: #ff7a00;
+}
+
+.review-card {
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  background: #fff;
+}
+
+.img-wrapper {
+    position: relative;
+    display: inline-block;
+    align-items: center;
+}
+
+
+.text-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  padding: 1px 20px;
+  background-color: #ff7b0037; /* lebih soft, warna oranye muda */
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 200; /* teks tebal */
+       /* warna teks */
+}
+
+.text-secondary i {
+  font-size: 22px;  /* ikon besar */
+  font-weight: 1900; /* ikon lebih tebal */
+  color: #ff7a00;   /* warna ikon */
+}
+
+.text-secondary span {
+    color: #ff7a00; /* ganti sesuai kebutuhan */
+    font-weight: 700; 
+    /* tetap tebal */
+}
+
+
+.imgkost1 {
+    margin-left: 200px;
+    width: auto;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.harga-box {
+     margin-left: 205px;
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 125px; 
+    background: #fff;
+    padding: 10px 14px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    line-height: 1.0;
+ 
+}
+
+.harga-box i {
+    font-size: 30px;
+    color: #ff7a00;
+}
+
+
+.harga-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* biar tidak ke-center */
+}
+.harga-label {
+    color: #000;      
+    font-size: 15px;      
+    font-weight: 500;
+}
+
+.harga-harga {
+    color: #ff7a00;     
+    font-size: 25px;      
+    font-weight: 700;
+}
+
+
+
+.fw-boldone {
+    font-weight: 500;
+    font-size: 45px;
+    color: #ff7a00;
+}
+
+.text-muted m-0 {
+    color: #555555;
+    font-size: 18px;
+    font-weight: semi-bold;
+}
+
+
+.kost-tree {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 20px;
+}
+
+
+.kost-wrapper {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* CARD UTAMA */
+.kost-card {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  overflow: hidden;
+  color: white;
+}
+
+.kost-card.large {
+  flex: 1 1 35%;
+  height: 650px;
+  width: 560px;
+      border-radius: 15px;
+}
+
+.imgkost2 {
+  
+    object-fit: cover;
+
+}
+
+
+.kost-card.small {
+    aspect-ratio: 2 / 0.87;   
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+
+.imgkost3 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;       /* crop otomatis */
+    object-position: center; /* fokus tengah */
+    display: block;
+}
+
+
+/* Overlay Gelap */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
+}
+
+/* Teks */
+.text-box {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10;
+  width: 85%;
+}
+
+.text-box h2,
+.text-box h3 {
+  margin: 0 0 10px 0;
+  font-weight: bold;
+}
+
+.text-box p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  text-shadow: 1px 1px 4px rgba(0,0,0,1);
+}
+
+/* Bagian Kanan */
+.kost-right {
+  flex: 1 1 48%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.container--unggul {
+    padding: 80px 55px;
+    background-color: #FDF0E7;
+}
+
+.row.g-6 {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}
+
+.box-unggulan {
+    background-color: #fff;
+    border-radius: 15px;
+    width: 222px;
+    height: 265px;
+    padding-top: 25px;   /* ini yang benar */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box-unggulan h6 {
+    margin-top: 22px; 
+}
+
+
+
+.feature-icon {
+    margin-top: 15px;
+    font-size: 28px;
+    background: #ef792453;
+    color: #ff7a00;
+    padding: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+
+
+.review-card {
+    margin-top: 25px;
+    width: auto;
+    height: 220px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    position: relative;
+}
+
+
+
+.rating-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.review-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+
+
+
+.img-circle {
+    width: 30px;       /* diameter lingkaran */
+    height: 30px;
+    border-radius: 50%; 
+    object-fit: cover;  /* crop otomatis */
+    object-position: center; 
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
