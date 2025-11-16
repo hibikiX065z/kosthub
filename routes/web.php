@@ -9,7 +9,7 @@ use App\Http\Controllers\AdminController;
 
 // ===== ROOT =====
 Route::get('/', function () {
-    return view('landing');
+    return view('pencari.landing');
 });
 
 

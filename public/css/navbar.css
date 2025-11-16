@@ -1,0 +1,78 @@
+.navbar {
+    background-color: #fff;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.logo {
+    width: 200px;     
+    height: auto;      
+    object-fit: contain;
+}
+
+/* Tombol Daftar */
+.daftar-btn {
+    border-color: #000;
+    color: #000;
+    transition: 0.3s;
+}
+
+.daftar-btn:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.daftar-btn:active {
+    background-color: #333;
+    color: #fff;
+    transform: scale(0.96);
+}
+
+
+/* Tombol Masuk */
+.masuk-btn {
+    background-color: #000;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.masuk-btn:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.masuk-btn:active {
+    background-color: #222;
+    transform: scale(0.96);
+}
+
+.daftar-btn {
+  border: 2px solid #ff7a00;
+  color: #ff7a00;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.daftar-btn:hover {
+  background-color: #ff7a00;
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
+}
+
+.masuk-btn {
+  background: linear-gradient(45deg, #ff7a00, #ffb347);
+  border: none;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
+  transition: all 0.3s ease;
+}
+.masuk-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 122, 0, 0.5);
+}
