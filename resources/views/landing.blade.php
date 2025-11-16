@@ -65,16 +65,17 @@
     }
     /* Tombol Daftar dan Masuk */
 .daftar-btn {
-  border: 2px solid #ff7a00;
-  color: #ff7a00;
+  background: linear-gradient(45deg, #2bff00, #ffb347);
+  border: none;
+  color: white;
   font-weight: 600;
+  box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
   transition: all 0.3s ease;
 }
 
 .daftar-btn:hover {
-  background-color: #ff7a00;
-  color: white;
-  box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 122, 0, 0.5);
 }
 
 .masuk-btn {
@@ -91,6 +92,20 @@
   box-shadow: 0 6px 15px rgba(255, 122, 0, 0.5);
 }
 
+.keluar-btn {
+  background: linear-gradient(45deg, #2e1b09c4, #ffb347);
+  border: none;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.keluar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 122, 0, 0.5);
+}
+
   </style>
 </head>
 <body>
@@ -101,8 +116,9 @@
     Kost<span class="text-warning">hub</span>
   </a>
   <div>
-    <a href="/register-pencari" class="btn btn-outline-dark rounded-pill px-4 me-2 daftar-btn">Daftar</a>
-    <a href="/login" class="btn masuk-btn rounded-pill px-4">Masuk</a>
+    <a href="/register-pencari" class="btn daftar-btn rounded-pill px-4">Daftar</a>
+    <a href="/login" class="btn masuk-btn rounded-pill px-4 me-2">Masuk</a>
+    <a href="/logout" class="btn keluar-btn rounded-pill px-4">Logout</a>
     </div>
 </nav>
 

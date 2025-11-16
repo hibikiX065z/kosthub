@@ -51,5 +51,4 @@ Route::middleware(['auth', 'role:pencari'])->group(function () {
 // ROLE: ADMIN
 // ======================
 
- Route::get('/dashboard/admin', [AdminController::class, 'index'])
-    ->name('dashboard.admin');
+    Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('dashboard.admin');
