@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Aktivitas;
+
 
 class AuthController extends Controller
 {
@@ -52,7 +54,13 @@ class AuthController extends Controller
         $validated['password'] = bcrypt($validated['password']);
         $validated['role'] = 'pemilik';
 
-        User::create($validated);
+        $newUser = User::create($validated);
+
+         // === SIMPAN AKTIVITAS ===
+        Aktivitas::create([
+        'user_id' => $newUser->id,
+        'kegiatan' => 'Registrasi akun sebagai Pemilik',
+    ]);
 
         return redirect('login')->with('success', 'Akun pemilik berhasil dibuat!');
     }
@@ -76,7 +84,13 @@ class AuthController extends Controller
         $validated['password'] = bcrypt($validated['password']);
         $validated['role'] = 'pencari';
 
-        User::create($validated);
+        $newUser = User::create($validated);
+
+        // === SIMPAN AKTIVITAS ===
+        Aktivitas::create([
+        'user_id' => $newUser->id,
+        'kegiatan' => 'Registrasi akun sebagai Pencari',
+        ]);
 
         return redirect('login')->with('success', 'Akun pencari berhasil dibuat!');
     }
