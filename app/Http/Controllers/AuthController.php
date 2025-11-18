@@ -54,11 +54,12 @@ class AuthController extends Controller
         $validated['password'] = bcrypt($validated['password']);
         $validated['role'] = 'pemilik';
 
-        $newUser = User::create($validated);
+        $user = User::create($validated);
+        $aktivitas = Aktivitas::with('user')->orderBy('created_at', 'desc')->get();
 
          // === SIMPAN AKTIVITAS ===
         Aktivitas::create([
-        'user_id' => $newUser->id,
+        'user_id' => $user->id,
         'kegiatan' => 'Registrasi akun sebagai Pemilik',
     ]);
 
@@ -84,11 +85,12 @@ class AuthController extends Controller
         $validated['password'] = bcrypt($validated['password']);
         $validated['role'] = 'pencari';
 
-        $newUser = User::create($validated);
+        $user = User::create($validated);
+        $aktivitas = Aktivitas::with('user')->orderBy('created_at', 'desc')->get();
 
         // === SIMPAN AKTIVITAS ===
         Aktivitas::create([
-        'user_id' => $newUser->id,
+        'user_id' => $user->id,
         'kegiatan' => 'Registrasi akun sebagai Pencari',
         ]);
 

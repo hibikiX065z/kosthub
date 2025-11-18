@@ -94,7 +94,7 @@
             width: 100%;
             display: flex;
             align-items: center;
-            padding: 12px 28px; 
+            padding: 14px 28px; 
             gap: 18px;
             bottom: 0;
             margin-bottom: 20px;
@@ -113,7 +113,7 @@
             margin-left: 17px;
         }
         
-        .sidebar-logout:hover {
+        .sidebar-logout a:hover {
             background: rgba(255, 255, 255, 0.219);
         }
 
@@ -143,15 +143,9 @@
             border: 1px solid rgba(0,0,0,0.03);
             text-align:center;
         }
-        .stat-card .icon-wrap { width:28px; height:28px; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; border-radius:20px; background:transparent; }
+        .stat-card .icon-wrap { width:38px; height:38px; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; border-radius:20px; background:transparent; }
         .stat-card .label { font-weight:600; color:#222; font-size:16px; }
         .stat-card .value { font-weight:800; font-size:32px; margin-top:8px; }
-
-        .picture {
-            width: 27px;
-            height: 27px;
-            filter: brightness(0);
-        }
 
         /* big content cards */
         .content-card {
@@ -170,8 +164,34 @@
 
         /* table simple */
         table.activity-table { width:100%; border-collapse:collapse; }
-        table.activity-table th { text-align:left; padding:10px 60px; color:#333; font-weight:700; font-size:16px; }
-        table.activity-table td { padding:80px 8px; color:#444; font-size:16px; border-top:1px solid rgba(0,0,0,0.03); }
+        table.activity-table th { text-align:left; padding:13px 60px; color:#333; font-weight:700; font-size:16px; }
+        table.activity-table td { padding:18px 10px; color:#444; font-size:16px; border-top:1px solid rgba(0,0,0,0.03); }
+        
+        .activity-section-bg {
+            background: var(--orange);
+            color: #F47A1F;
+            padding: 10px 10px;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .aktivitas-wrapper {
+            max-height: 180px;
+            overflow-y: auto;
+        }
+
+        .activity-table thead th {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 5;
+        }
+
+        .activity-table tbody tr:nth-child(odd) {
+            background: #dbdbdb61;
+        }
+        .activity-table tbody tr:nth-child(even) {
+            background: #f7f7f77b;
+        }
 
         /* responsive */
         @media (max-width: 900px){
@@ -187,17 +207,16 @@
             <img src="{{ asset('img/admin/logohitam.png') }}" alt="Kosthub logo">
         </div>
 
-        <div class="sidebar-profile">
-            <div style="padding:18px 10px; display:flex; gap:12px; align-items:center;">
-                <div class="sidebar-profile">
-                    <img src="{{ asset('img/admin/profil.png') }}" class="profile-logo" alt="Profil logo">
+        <div class="sidebar-profile" style="display:flex; align-items:center; gap:22px; margin-bottom: -15px; padding:50px 23px;">
+            <img src="{{ asset('img/admin/profil.png') }}" class="profile-logo" alt="Profil logo">
+            <div style="display:flex; flex-direction:column; justify-content:center;">
+                <div style="font-size:18px; font-weight:600; opacity:1;">
+                    {{ auth()->check() ? auth()->user()->name : 'Fineshyt' }}
                 </div>
-
-                <div>
-                    <div style="font-size:18px; font-weight:600; opacity:0.9;">{{ auth()->check() ? auth()->user()->name : 'Fineshyt' }}</div>
-                </div>
+                <div style="font-size:14px; opacity:0.8; margin-top:-2px;">Admin</div>
             </div>
         </div>
+
 
         <div class="sidebar-menu">  
             <a href="{{ route('dashboard.admin') }}" class="sidebar-menu-item">
@@ -250,7 +269,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="stat-card">
                 <div class="icon-wrap">
-                    <img src="{{ asset('img/admin/pengguna.png') }}" class="picture" alt="pengguna">
+                    <img src="{{ asset('img/admin/pengguna-aktif.png') }}" class="picture" alt="pengguna">
                 </div>
                 <div class="label">Jumlah Pengguna</div>
                 <div class="value">{{ number_format($jumlahPengguna ?? 0,0,',','.') }}</div>
@@ -258,7 +277,7 @@
 
             <div class="stat-card">
                 <div class="icon-wrap">
-                    <img src="{{ asset('img/admin/kos.png') }}" class="picture" alt="kos">
+                    <img src="{{ asset('img/admin/kos-aktif.png') }}" class="picture" alt="kos">
                 </div>
                 <div class="label">Kos aktif</div>
                 <div class="value">{{ number_format($kosAktif ?? 0,0,',','.') }}</div>
@@ -266,7 +285,7 @@
 
             <div class="stat-card">
                 <div class="icon-wrap">
-                    <img src="{{ asset('img/admin/aktivitas.png') }}" class="picture" alt="aktivitas">
+                    <img src="{{ asset('img/admin/aktivitas-aktif.png') }}" class="picture" alt="aktivitas">
                 </div>
                 <div class="label">Jumlah Verifikasi</div>
                 <div class="value">{{ number_format($jumlahVerifikasi ?? 0,0,',','.') }}</div>
@@ -276,7 +295,9 @@
         <!-- lower content: aktivitas + tindakan -->
         <div class="two-col">
             <div class="content-card">
-                <h3 style="font-weight:700; margin-bottom:18px;">Aktivitas terbaru</h3>
+                <div class="activity-section-bg">
+                    <h3 style="font-weight:700; color: #ffffff;">Aktivitas terbaru</h3>
+                </div>
 
                 <table class="activity-table">
                     <thead>
@@ -286,12 +307,22 @@
                             <th>Pengguna</th>
                         </tr>
                     </thead>
+                </table>
+                
+            <div class="aktivitas-wrapper">    
+                <table class="activity-table">
                     <tbody>
-                        @forelse($aktivitas as $act)
+                        @forelse($aktivitas as $item)
                             <tr>
-                                <td>{{ $act->created_at->format('d M Y') }}</td>
-                                <td>{{ $act->kegiatan }}</td>
-                                <td>{{ '@'.$act->user->username ?? '@'.$act->user->name ?? '—' }}</td>
+                                <td>{{ $item->created_at->format('d M Y') }}</td>
+                                <td>{{ $item->kegiatan }}</td>
+                                <td>
+                                    @if($item->user)
+                                        {{ '@' . $item->user->name }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr>
@@ -300,12 +331,15 @@
                         @endforelse
                     </tbody>
                 </table>
+            </div>    
             </div>
 
             <div class="content-card">
-                <h3 style="font-weight:700; margin-bottom:14px;">Perlu tindakan hari ini</h3>
+                <div class="activity-section-bg">
+                    <h3 style="font-weight:700; color: #ffffff;">Perlu tindakan hari ini</h3>
+                </div>
 
-                <ul style="list-style:none; padding-left:0; color:#444;">
+                <ul style="list-style:none; padding:13px 8px; color:#444;">
                     <li class="mb-3"><span class="bullet"></span> {{ $menungguVerifikasi ?? 0 }} Kos belum diverifikasi</li>
                     <li><span class="bullet"></span> {{ $pendingReports ?? 0 }} Laporan belum direspon</li>
                 </ul>
