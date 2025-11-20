@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_kos');
             $table->string('tipe'); // putra / putri / campur
             $table->text('deskripsi')->nullable();
+            $table->text('lokasi')->nullable();
             $table->text('catatan')->nullable();
 
             // Step 2 — Lokasi

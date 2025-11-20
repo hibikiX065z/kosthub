@@ -59,6 +59,8 @@ Route::middleware(['auth', 'role:pencari'])->group(function () {
     Route::get('/pencari', function () {
         return view('pencari.landing');
         })->middleware('role:pencari');
+        Route::get('/pencari/profile', [AuthController::class, 'profilePemilik'])
+        ->name('pencari.profile');
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/favorites/{id}', [FavoriteController::class, 'store'])->name('favorites.store');
     Route::delete('/favorites/{id}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
@@ -97,3 +99,5 @@ Route::get('/pemilik/kos/tambah', function () {
 })->name('pemilik.kos.tambah');
 
 Route::post('/pemilik/kos/store', [PemilikController::class, 'store'])->name('pemilik.kos.store');
+
+Route::get('/search/filter', [KosSearchController::class, 'filter'])->name('filter.kos');

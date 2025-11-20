@@ -15,7 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+         \App\Models\User::factory()->create([
+        'name' => 'Owner Premium',
+        'email' => 'owner@test.com',
+        'password' => bcrypt('password'),
+    ]);
 
         $this->call([
         UserSeeder::class,
