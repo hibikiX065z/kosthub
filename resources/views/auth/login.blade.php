@@ -217,7 +217,7 @@
                      @error('password')
                         <small style="color:red;">{{ $message }}</small>
                         @enderror
-
+                    
                     
                     <p class="register-link">
                         Belum punya akun pencari? 
