@@ -5,8 +5,9 @@
 @section('content')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+    
     <header>
+
         <div class="custom-header">
         <img src="/img/logo_hitam.png" class="logo" alt="Logo">
 
@@ -26,7 +27,7 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
 
                         <!-- FOTO PROFIL USER -->
-                        <img src="{{ Auth::user()->foto_profil ?? asset('img/admin/pengguna-aktif.png') }}"
+                        <img src="{{ Auth::user()->foto_profil ?? asset('img/default-user.png') }}"
                             alt="profile"
                             class="rounded-circle"
                             width="38" height="38"
@@ -55,12 +56,14 @@
             </ul>
 
         </div>
+
     </header>
 
-
     <body>
-        <section class="hero-section">
-            <img src="img/pemilik/headerkos.png" class="hero-img" />
+
+
+        <section class="search-section">
+            <img src="img/kost8.jpg" class="hero-img" />
             <h1 class="hero-title">Kost</h1>
 
             <div class="container">
@@ -85,6 +88,9 @@
                 </div>
             </div>
         </section>
+
+        {{-- Tidak Nutup Konten --}}
+        <div style="height: 20px;"></div>
 
         <section class="listings">
             <div class="card-grid">

@@ -7,7 +7,7 @@
 
     <div class="card shadow-sm p-4" style="max-width: 600px;">
         <div class="text-center mb-4">
-            <img src="{{ $user->foto_profil ?? asset('img/admin/pengguna-aktif.png') }}"
+            <img src="{{ $user->foto_profil ?? asset('img/default-user.png') }}"
                  width="120" height="120"
                  class="rounded-circle border"
                  style="object-fit: cover;">

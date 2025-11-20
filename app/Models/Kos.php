@@ -9,17 +9,26 @@ class Kos extends Model
 {
     use HasFactory;
 
+    protected $table = 'kos';
+
+    // Field yang bisa di–mass assign
     protected $fillable = [
         'nama_kos',
-        'alamat',
         'lokasi',
         'harga',
-        'pemilik_id',
-        'status' // aktif / pending / nonaktif
+        'tipe',
+        'fasilitas',
+        'owner_id'
     ];
 
-    public function pemilik()
+    // otomatis cast JSON → array
+    protected $casts = [
+        'fasilitas' => 'array',
+    ];
+
+    // Relasi ke owner (user)
+    public function owner()
     {
-        return $this->belongsTo(User::class, 'pemilik_id');
+        return $this->belongsTo(User::class, 'owner_id');
     }
 }
