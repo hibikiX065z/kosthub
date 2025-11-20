@@ -178,7 +178,7 @@
                 <a href="#">Home</a>
                 <a href="#">Kost</a>
                 <a href="#">About</a>
-                <a href="#">Tambah Kost</a>
+                <a href="{{ route('pemilik.kos.tambah') }}">Tambah Kost</a>
             </nav>
 
             <ul class="navbar-nav ms-auto align-items-center">
@@ -231,8 +231,18 @@
         </div>
 
         <div class="search-group">
-            <input type="text" placeholder="Cari kost...">
-            <button><i class="bi bi-search"></i></button>
+           <form action="{{ route('search.kos') }}" method="GET" class="d-flex gap-2">
+    <input type="text" 
+           name="lokasi" 
+           class="form-control w-auto" 
+           placeholder="Cari lokasi kost...">
+    <button type="submit" class="btn btn-light border shadow-sm">
+        <i class="bi bi-search"></i>
+    </button>
+</form>
+
+</form>
+
         </div>
     </div>
 </div>
