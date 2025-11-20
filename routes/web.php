@@ -12,6 +12,11 @@ Route::get('/', function () {
     return view('pencari.landing');
 });
 
+Route::get('/kost', function () {
+    return view('pencari.kost');
+});
+
+
 
 // ======================
 // AUTH ROUTES
@@ -52,3 +57,6 @@ Route::middleware(['auth', 'role:pencari'])->group(function () {
 // ======================
 
     Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('dashboard.admin');
+
+
+  
