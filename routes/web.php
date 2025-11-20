@@ -54,8 +54,15 @@ Route::middleware(['auth', 'role:pemilik'])->group(function () {
 // ======================
 Route::middleware(['role:pencari'])->group(function () {
     Route::get('/pencari', function () {
-        return view('pencari.landing');
+        return view('pencari.kost');
         })->middleware('role:pencari');
+    Route::get('/pencari/profile', [AuthController::class, 'profilePencari'])
+        ->name('pencari.profile');
+    Route::post('/logout', function() {
+            Auth::logout();
+            return redirect('/'); // arahkan ke landing page
+            })->name('logout');
+        
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/favorites/{id}', [FavoriteController::class, 'store'])->name('favorites.store');
     Route::delete('/favorites/{id}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');

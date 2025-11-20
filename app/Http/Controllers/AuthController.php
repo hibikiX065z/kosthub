@@ -118,6 +118,12 @@ class AuthController extends Controller
         return view('pemilik.profile', compact('user'));
     }
 
+    public function profilePencari()
+    {
+        $user = Auth::user();
+        return view('pencari.profile', compact('user'));
+    }
+
     // LOGOUT
     public function logout()
     {

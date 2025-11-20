@@ -17,11 +17,11 @@ return new class extends Migration
         $table->text('alamat');
         $table->string('lokasi');
         $table->integer('harga');
-        $table->unsignedBigInteger('pemilik_id');
+        $table->unsignedBigInteger('owner_id');
         $table->enum('status', ['aktif', 'pending', 'nonaktif'])->default('pending');
         $table->timestamps();
 
-        $table->foreign('pemilik_id')
+        $table->foreign('owner_id')
               ->references('id')->on('users')
               ->onDelete('cascade');
     });
