@@ -164,8 +164,8 @@
 
         /* table simple */
         table.activity-table { width:100%; border-collapse:collapse; }
-        table.activity-table th { text-align:left; padding:13px 60px; color:#333; font-weight:700; font-size:16px; }
-        table.activity-table td { padding:18px 10px; color:#444; font-size:16px; border-top:1px solid rgba(0,0,0,0.03); }
+        table.activity-table th { text-align:left; padding:13px 25px; color:#333; font-weight:700; font-size:16px; }
+        table.activity-table td { padding:18px 20px; color:#444; font-size:16px; border-top:1px solid rgba(0,0,0,0.03); }
         
         .activity-section-bg {
             background: var(--orange);
@@ -185,6 +185,10 @@
             background: #fff;
             z-index: 5;
         }
+        
+        .col-tanggal { width: 240px; }
+        .col-aktivitas { width: 600px; }
+        .col-pengguna { width: 270px; }
 
         .activity-table tbody tr:nth-child(odd) {
             background: #dbdbdb61;
@@ -299,15 +303,17 @@
                     <h3 style="font-weight:700; color: #ffffff;">Aktivitas terbaru</h3>
                 </div>
 
+            <div style="overflow-y:auto; max-height:180px;">
                 <table class="activity-table">
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
-                            <th>Aktivitas</th>
-                            <th>Pengguna</th>
+                            <th class="col-tanggal">Tanggal</th>
+                            <th class="col-aktivitas">Aktivitas</th>
+                            <th class="col-pengguna">Pengguna</th>
                         </tr>
                     </thead>
                 </table>
+            </div>
                 
             <div class="aktivitas-wrapper">    
                 <table class="activity-table">

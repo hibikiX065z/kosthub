@@ -21,7 +21,7 @@ class RegisterController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
             'kontak' => $request->kontak,
             'email' => $request->email,
-            'role' => $request->role, // pencari/pemilik
+            'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
 

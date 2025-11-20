@@ -10,32 +10,44 @@ use App\Models\Aktivitas;
 
 class AuthController extends Controller
 {
-    // === LOGIN ===
+    // FORM LOGIN
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+    // LOGIN YANG BENAR
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
         if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
             $user = Auth::user();
 
-            if ($user->role == 'admin') {
-                return redirect('dashboard/admin');
-            } elseif ($user->role == 'pemilik') {
-                return redirect('/');
-            } else {
-                return redirect('/');
+            // Redirect sesuai role
+            if ($user->role === 'admin') {
+                return redirect('/admin');
+            } elseif ($user->role === 'pemilik') {
+                return redirect('/pemilik');
+            } elseif ($user->role === 'pencari') {
+                return redirect('/pencari');
             }
+
+            // Role tidak valid
+            Auth::logout();
+            return redirect('login')->with('error', 'Role tidak dikenali.');
         }
 
-        return back()->withErrors(['email' => 'Email atau password salah.']);
+        return back()->with('error', 'Email atau password salah.');
     }
 
-    // === REGISTER PEMILIK ===
+    // ============================
+    // REGISTER PEMILIK
+    // ============================
     public function showRegisterPemilik()
     {
         return view('auth.register-pemilik');
@@ -55,18 +67,20 @@ class AuthController extends Controller
         $validated['role'] = 'pemilik';
 
         $user = User::create($validated);
-        $aktivitas = Aktivitas::with('user')->orderBy('created_at', 'desc')->get();
+        $user->email_verified_at = now();
+        $user->save();
 
-         // === SIMPAN AKTIVITAS ===
         Aktivitas::create([
-        'user_id' => $user->id,
-        'kegiatan' => 'Registrasi akun sebagai Pemilik',
-    ]);
+            'user_id' => $user->id,
+            'kegiatan' => 'Registrasi akun sebagai Pemilik',
+        ]);
 
         return redirect('login')->with('success', 'Akun pemilik berhasil dibuat!');
     }
 
-    // === REGISTER PENCARI ===
+    // ============================
+    // REGISTER PENCARI
+    // ============================
     public function showRegisterPencari()
     {
         return view('auth.register-pencari');
@@ -86,45 +100,28 @@ class AuthController extends Controller
         $validated['role'] = 'pencari';
 
         $user = User::create($validated);
-        $aktivitas = Aktivitas::with('user')->orderBy('created_at', 'desc')->get();
+        $user->email_verified_at = now();
+        $user->save();
 
-        // === SIMPAN AKTIVITAS ===
         Aktivitas::create([
-        'user_id' => $user->id,
-        'kegiatan' => 'Registrasi akun sebagai Pencari',
+            'user_id' => $user->id,
+            'kegiatan' => 'Registrasi akun sebagai Pencari',
         ]);
 
         return redirect('login')->with('success', 'Akun pencari berhasil dibuat!');
     }
 
-    public function loginPost(Request $request)
-{
-    $credentials = $request->only('email', 'password');
-
-    if (Auth::attempt($credentials)) {
+    // PROFILE
+    public function profilePemilik()
+    {
         $user = Auth::user();
-
-        // Redirect sesuai role
-        if ($user->role === 'admin') {
-            return redirect('dashboard.admin');
-        } elseif ($user->role === 'pemilik') {
-            return redirect('/');
-        } elseif ($user->role === 'pencari') {
-            return redirect('/');
-        } else {
-            Auth::logout();
-            return redirect()->route('login')->with('error', 'Role tidak dikenali.');
-        }
+        return view('pemilik.profile', compact('user'));
     }
 
-    return back()->with('error', 'Email atau password salah.');
-}
-
-
-    // === LOGOUT ===
+    // LOGOUT
     public function logout()
     {
         Auth::logout();
         return redirect('login');
     }
-};
+}

@@ -1,22 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KosController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\KosSearchController;
-use App\Http\Controllers\PemilikController;
 
 // ===== ROOT =====
 Route::get('/', function () {
-    return view('pencari.landing');
+    return view('welcome');
 });
-
-Route::get('/kost', function () {
-    return view('pencari.kost');
-});
-
 
 
 // ======================
@@ -39,23 +34,36 @@ Route::post('/register-pencari', [AuthController::class, 'registerPencari'])->na
 // ROLE: PEMILIK
 // ======================
 Route::middleware(['auth', 'role:pemilik'])->group(function () {
+    Route::get('/pemilik', function () {
+            return view('pemilik.landing');
+        })->middleware('role:pemilik');
+    Route::get('/pemilik/profile', [AuthController::class, 'profilePemilik'])
+        ->name('pemilik.profile');
+    Route::post('/logout', function() {
+            Auth::logout();
+            return redirect('/'); // arahkan ke landing page
+            })->name('logout');
+
     Route::get('/kos/create', [KosController::class, 'create'])->name('kos.create');
     Route::post('/kos', [KosController::class, 'store'])->name('kos.store');
     Route::delete('/kos/{kos}', [KosController::class, 'destroy'])->name('kos.destroy');
 });
 
 // ======================
+// ROLE: PENCARI
+// ======================
+Route::middleware(['role:pencari'])->group(function () {
+    Route::get('/pencari', function () {
+        return view('pencari.landing');
+        })->middleware('role:pencari');
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+    Route::post('/favorites/{id}', [FavoriteController::class, 'store'])->name('favorites.store');
+    Route::delete('/favorites/{id}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
+});
+
+// ======================
 // ROLE: ADMIN
 // ======================
-
-    Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('dashboard.admin');
-
-
-  
-    // PENCARI (search)
-Route::get('/search', [KosSearchController::class, 'search'])->name('kos.search');
-
-// PEMILIK KOS
-Route::get('/pemilik', [PemilikController::class, 'index'])->name('pemilik.index');
-Route::post('/pemilik/kos', [PemilikController::class, 'store'])->name('pemilik.store');
-Route::put('/pemilik/kos/{id}', [PemilikController::class, 'update'])->name('pemilik.update');
+Route::middleware(['role:admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('dashboard.admin');
+});
