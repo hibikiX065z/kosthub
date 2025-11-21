@@ -8,6 +8,7 @@ use App\Http\Controllers\KosSearchController;
 use App\Http\Controllers\KostController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PemilikController;
 
 // ===== ROOT =====
 Route::get('/', function () {
@@ -85,12 +86,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             return redirect('/'); // arahkan ke landing page
             })->name('logout');
 });
+
 Route::get('/search', [KosController::class, 'search'])->name('kos.search');
 
 Route::get('/search', [KosSearchController::class, 'search'])->name('search.kos');
 Route::get('/search/filter', [KosSearchController::class, 'filter'])->name('filter.kos');
 
-use App\Http\Controllers\PemilikController;
 
 // Halaman form tambah kos
 Route::get('/pemilik/kos/tambah', [PemilikController::class, 'create'])->name('pemilik.kos.create');

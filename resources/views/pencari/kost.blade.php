@@ -77,10 +77,17 @@
                                     <small>Dapatkan infonya di Kosthub.</small>
                                 </div>
 
-                                <div class="search-group">
-                                    <input type="text" placeholder="Cari kost...">
-                                    <button><i class="bi bi-search"></i></button>
+                                <div class="search-wrapper">
+                                    <form action="{{ route('search.kos') }}" method="GET">
+                                        <div class="input-group custom-input-group">
+                                            <input type="text" name="lokasi" class="form-control custom-search" placeholder="Cari kost...">
+                                            <button type="submit" class="btn custom-btn-search">
+                                                <i class="bi bi-search"></i>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
+
                             </div>
 
                         </div>
