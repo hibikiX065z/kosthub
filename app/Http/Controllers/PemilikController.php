@@ -9,7 +9,7 @@ class PemilikController extends Controller
 {
     public function index()
     {
-        $kos = Kos::where('owner_id', auth()->id())->get();
+        $kos = Kos::where('pemilik_id', auth()->id())->get();
         return view('pemilik.index', compact('kos'));
     }
 
@@ -28,8 +28,8 @@ class PemilikController extends Controller
             'lokasi' => $request->lokasi,
             'harga' => $request->harga,
             'tipe' => $request->tipe,
-            'fasilitas' => $request->fasilitas,
-            'owner_id' => auth()->id(),
+            'fasilitas' => json_encode($request->fasilitas),
+            'pemilik_id' => auth()->id(),
         ]);
 
         return back()->with('success', 'Kos berhasil ditambahkan');
@@ -39,7 +39,21 @@ class PemilikController extends Controller
     {
         $kos = Kos::findOrFail($id);
 
-        $kos->update($request->all());
+        $request->validate([
+            'nama_kos' => 'required',
+            'lokasi' => 'required',
+            'harga' => 'required|integer',
+            'tipe' => 'required',
+            'fasilitas' => 'required|array',
+        ]);
+
+        $kos->update([
+            'nama_kos' => $request->nama_kos,
+            'lokasi' => $request->lokasi,
+            'harga' => $request->harga,
+            'tipe' => $request->tipe,
+            'fasilitas' => json_encode($request->fasilitas),
+        ]);
 
         return back()->with('success', 'Kos berhasil diupdate');
     }

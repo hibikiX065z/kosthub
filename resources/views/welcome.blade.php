@@ -55,19 +55,28 @@
   <div class="container">
     <div class="search-box-wrapper">
       <div class="search-box">
-        <div class="d-flex flex-wrap align-items-center gap-3">
+        <form action="{{ route('search.kos') }}" method="GET" class="d-flex flex-wrap align-items-center gap-3">
+
           <div class="flex-grow-1">
             <h6 class="text-searchone">Mau cari kost?</h6>
             <small class="text-mutedtwo">Dapatkan infonya di Kosthub.</small>
           </div>
 
-          <input type="text" class="form-control w-auto" placeholder="Cari kost...">
-          <button class="btn btn-light border shadow-sm"><i class="bi bi-search"></i></button>
-          <select class="form-select w-auto"><option>Harga</option></select>
-          <select class="form-select w-auto"><option>Lokasi</option></select>
-          <select class="form-select w-auto"><option>Tipe</option></select>
+          <!-- Input Lokasi -->
+          <input 
+              type="text" 
+              name="lokasi" 
+              class="form-control w-auto" 
+              placeholder="Cari berdasarkan lokasi..."
+              required
+          >
 
-        </div>
+          <!-- Tombol Cari -->
+          <button type="submit" class="btn btn-light border shadow-sm">
+            <i class="bi bi-search"></i>
+          </button>
+
+        </form>
       </div>
     </div>
   </div>

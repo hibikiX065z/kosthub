@@ -11,24 +11,62 @@ class Kos extends Model
 
     protected $table = 'kos';
 
-    // Field yang bisa di–mass assign
     protected $fillable = [
+        'user_id',
+
+        'gambar',
+        'fasilitas', 
+
+        // STEP 1 — Informasi Dasar
         'nama_kos',
-        'lokasi',
-        'harga',
         'tipe',
-        'fasilitas',
-        'owner_id'
+        'deskripsi',
+        'catatan',
+
+        // STEP 2 — Lokasi
+        'alamat',
+        'provinsi',
+        'kabupaten',
+        'kecamatan',
+        'catatan_alamat',
+        'latitude',
+        'longitude',
+
+        // STEP 3 — Foto
+        'foto_depan',
+        'foto_jalan',
+        'foto_kamar',
+        'foto_kamar_mandi',
+        'foto_lain',
+
+        // STEP 4 — Fasilitas
+        'fasilitas_umum',
+        'fasilitas_kamar',
+        'fasilitas_kamar_mandi',
+        'parkir',
+
+        // STEP 5 — Kamar
+        'total_kamar',
+        'kamar_tersedia',
+
+        // STEP 6 — Harga
+        'harga_per_bulan',
+        'biaya_tambahan',
     ];
 
-    // otomatis cast JSON → array
     protected $casts = [
         'fasilitas' => 'array',
+        'fasilitas_umum' => 'array',
+        'fasilitas_kamar' => 'array',
+        'fasilitas_kamar_mandi' => 'array',
+        'parkir' => 'array',
+        'latitude' => 'float',
+        'longitude' => 'float',
     ];
 
-    // Relasi ke owner (user)
+    // relasi owner
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
