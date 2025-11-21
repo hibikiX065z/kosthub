@@ -14,6 +14,9 @@ class Kos extends Model
     protected $fillable = [
         'user_id',
 
+        'gambar',
+        'fasilitas', 
+
         // STEP 1 — Informasi Dasar
         'nama_kos',
         'tipe',
@@ -52,6 +55,7 @@ class Kos extends Model
     ];
 
     protected $casts = [
+        'fasilitas' => 'array',
         'fasilitas_umum' => 'array',
         'fasilitas_kamar' => 'array',
         'fasilitas_kamar_mandi' => 'array',

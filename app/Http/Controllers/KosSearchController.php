@@ -41,6 +41,9 @@ class KosSearchController extends Controller
 
     $kos = $query->get();
 
-    return view('kos.search', compact('kos', 'lokasi', 'request'));
-    }
-}
+      return view('kos.search', [
+            'kos' => $kos,
+            'request' => $request,
+            'lokasi' => $request->lokasi
+        ]);
+}}
