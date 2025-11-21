@@ -16,8 +16,8 @@
             <nav class="d-flex align-items-center" style="gap: 10px;">
                 <a href="#">Home</a>
                 <a href="#">Kost</a>
-                <a href="#">About</a>
                 <a href="{{ route('pemilik.kos.tambah') }}">Tambah Kost</a>
+                <a href="#">About</a>
             </nav>
 
             <ul class="navbar-nav ms-auto align-items-center">
@@ -59,38 +59,9 @@
 
     </header>
 
-    {{-- Tulisan besar KOST --}}
-    <div class="hero-text">Kost</div>
+    <body>
 
-    {{-- Search --}}
-    <div class="floating-box">
-        <div>
-            <div class="left-text">Mau cari kost?</div>
-            <small>Dapatkan infonya di Kosthub.</small>
-        </div>
-
-        <div class="search-group">
-           <form action="{{ route('search.kos') }}" method="GET" class="d-flex gap-2">
-    <input type="text" 
-           name="lokasi" 
-           class="form-control w-auto" 
-           placeholder="Cari lokasi kost...">
-    <button type="submit" class="btn btn-light border shadow-sm">
-        <i class="bi bi-search"></i>
-    </button>
-</form>
-
-</form>
-
-        </div>
-    </div>
-</div>
-
-{{-- Tidak Nutup Konten --}}
-<div style="height: 50px;"></div>
-
-
-        <section class="search-section">
+    <section class="search-section">
             <img src="img/kost8.jpg" class="hero-img" />
             <h1 class="hero-title">Kost</h1>
 
@@ -105,10 +76,17 @@
                                     <small>Dapatkan infonya di Kosthub.</small>
                                 </div>
 
-                                <div class="search-group">
-                                    <input type="text" placeholder="Cari kost...">
-                                    <button><i class="bi bi-search"></i></button>
+                                <div class="search-wrapper">
+                                    <form action="{{ route('search.kos') }}" method="GET">
+                                        <div class="input-group custom-input-group">
+                                            <input type="text" name="lokasi" class="form-control custom-search" placeholder="Cari kost...">
+                                            <button type="submit" class="btn custom-btn-search">
+                                                <i class="bi bi-search"></i>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
+
                             </div>
 
                         </div>
