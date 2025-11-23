@@ -96,7 +96,7 @@
 
         </section>
 
-        <section class="recommend">
+        <section class="recommend-rek">
             <div class="rec-section">
 
                 <div class="rec-header">
@@ -129,19 +129,30 @@
                                     <span class="rec-tag">Putra</span>
                                 </div>
 
-                                <h4 class="rec-name">Indah Kost</h4>
+                                <div class="rec-over">
+                                    <div class="rec-info-row">
+                                    <h4 class="rec-name">Indah Kost</h4>
 
-                                <div class="rec-rating">
-                                    <i class="fa-solid fa-star"></i> 3.5
+                                    <div class="rec-rating">
+                                        <i class="fa-solid fa-star"></i> 3.5
+                                    </div>
                                 </div>
 
-                                <div class="rec-price">
-                                    Rp 1.000.000 <small>per bulan</small>
+
+                                <div class="rec-footer">
+                                    <div class="rec-price">
+                                        Rp 1.000.000 
+                                        <span class="rec-price-sub">per bulan</span>
+                                    </div>
+
+                                    <button class="rec-view-btn">
+                                         <i class="fa-regular fa-eye"></i> Lihat
+                                    </button>
                                 </div>
 
-                                <button class="rec-view-btn">
-                                    <i class="fa-solid fa-eye"></i> Lihat
-                                </button>
+                                </div>
+
+                                
                             </div>
                         @endfor
 
@@ -271,4 +282,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
+
 </script>
