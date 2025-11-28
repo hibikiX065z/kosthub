@@ -50,4 +50,11 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+  // User.php
+public function favorites()
+{
+    return $this->belongsToMany(Kos::class, 'favorites', 'user_id', 'kos_id')->withTimestamps();
+}
+
+
 }

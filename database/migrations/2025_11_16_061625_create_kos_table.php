@@ -8,6 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // Tabel Kos
         Schema::create('kos', function (Blueprint $table) {
             $table->id();
 
@@ -18,11 +19,10 @@ return new class extends Migration
             $table->string('nama_kos');
             $table->string('tipe'); // putra / putri / campur
             $table->text('deskripsi')->nullable();
-            $table->text('lokasi')->nullable();
             $table->text('catatan')->nullable();
 
             // Step 2 — Lokasi
-            $table->string('alamat');
+            $table->string('alamat')->nullable();
             $table->string('provinsi')->nullable();
             $table->string('kabupaten')->nullable();
             $table->string('kecamatan')->nullable();
@@ -56,10 +56,22 @@ return new class extends Migration
             // Foreign Key
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+
+        // Tabel Reviews
+        Schema::create('reviews', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('kos_id')->constrained('kos')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->tinyInteger('rating'); // 1-5
+            $table->text('comment')->nullable();
+            $table->string('avatar')->nullable();
+            $table->timestamps();
+        });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('reviews');
         Schema::dropIfExists('kos');
     }
 };

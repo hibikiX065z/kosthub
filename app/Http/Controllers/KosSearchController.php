@@ -2,48 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Kos;
+use Illuminate\Http\Request;
 
 class KosSearchController extends Controller
 {
-    public function search(Request $request)
+    private function filterQuery(Request $request)
     {
-       $lokasi = $request->lokasi;
+        $query = Kos::query();
 
-    $query = Kos::query();
-
-    // Tetap filter berdasarkan lokasi yang dicari
-    if ($request->filled('lokasi')) {
-        $query->where('lokasi', 'like', '%' . $lokasi . '%');
-    }
-
-    // Filter harga
-    if ($request->filled('harga_min')) {
-        $query->where('harga', '>=', $request->harga_min);
-    }
-
-    if ($request->filled('harga_max')) {
-        $query->where('harga', '<=', $request->harga_max);
-    }
-
-    // Filter tipe
-    if ($request->filled('tipe')) {
-        $query->where('tipe', $request->tipe);
-    }
-
-    // Filter fasilitas
-    if ($request->filled('fasilitas')) {
-        foreach ($request->fasilitas as $fas) {
-            $query->where('fasilitas', 'like', '%' . $fas . '%');
+        // Search lokasi
+        if ($request->filled('alamat')) {
+            $query->where('alamat', 'like', '%' . $request->alamat . '%');
         }
+
+        // Filter tipe kos
+        if ($request->filled('tipe')) {
+            $query->where('tipe', $request->tipe);
+        }
+
+        // Harga min - max
+        if ($request->filled('min')) {
+            $query->where('harga_per_bulan', '>=', $request->min);
+        }
+
+        if ($request->filled('max')) {
+            $query->where('harga_per_bulan', '<=', $request->max);
+        }
+
+        // Fasilitas (cek semua kolom fasilitas)
+       if ($request->filled('fasilitas')) {
+    foreach ($request->fasilitas as $f) {
+        $query->where(function($q) use ($f) {
+            $q->whereJsonContains('fasilitas_umum', $f)
+              ->orWhereJsonContains('fasilitas_kamar', $f)
+              ->orWhereJsonContains('fasilitas_kamar_mandi', $f);
+        });
+    }
+}
+
+        return $query->latest()->paginate(12)->withQueryString();
     }
 
-    $kos = $query->get();
 
-      return view('kos.search', [
-            'kos' => $kos,
-            'request' => $request,
-            'lokasi' => $request->lokasi
+    // ----------- VIEW BERBEDA -------------
+    public function guestIndex(Request $request)
+    {
+        return view('guest.kos.index', [
+            'kos' => $this->filterQuery($request)
         ]);
-}}
+    }
+
+    public function pencariIndex(Request $request)
+    {
+        return view('pencari.kos.index', [
+            'kos' => $this->filterQuery($request)
+        ]);
+    }
+
+    public function pemilikIndex(Request $request)
+    {
+        return view('pemilik.kos.index', [
+            'kos' => $this->filterQuery($request)
+        ]);
+    }
+}
