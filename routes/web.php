@@ -15,6 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/kost', function () {
+    return view('pencari.kost');
+});
+
+Route::get('/detail_kost', function () {
+    return view('pencari.detail_kost');
+});
+
+
+
 
 // ======================
 // AUTH ROUTES
