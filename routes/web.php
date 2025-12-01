@@ -94,21 +94,15 @@ Route::middleware(['auth', 'role:pencari'])
             // Search
             Route::get('/search', [KosSearchController::class, 'pencariIndex'])->name('search');
         });
-
     });
 
 
 // ======================
 // ROLE: ADMIN
 // ======================
-Route::middleware(['auth', 'role:admin'])
-    ->prefix('admin')
-    ->name('admin')
-    ->group(function () {
 
-        Route::get('/dashboard', fn() => view('dashboard.admin'))->name('admin');
-
-    });
+        Route::get('/dashboard/admin', [AdminController::class, 'index'])
+            ->name('dashboard.admin');
 
 
 // ======================
