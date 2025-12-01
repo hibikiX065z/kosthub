@@ -103,9 +103,11 @@ Route::middleware(['auth', 'role:pencari'])
 // ======================
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
-    ->name('admin.')
+    ->name('admin')
     ->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+
+        Route::get('/dashboard', fn() => view('dashboard.admin'))->name('admin');
+
     });
 
 
