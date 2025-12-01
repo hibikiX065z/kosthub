@@ -5,21 +5,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{{ $title ?? 'Dashboard Admin' }}</title>
 
-    <!-- Tailwind CDN (dipakai untuk utility) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <link rel="stylesheet" href="/css/sidebar_admin.css">
 
+    <!-- Tailwind CDN (dipakai untuk utility) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 
     @include('layouts.sidebar_admin')
-
-    <div class="main-area">
-        <!-- top orange header (full width inside content) -->
-        <div class="header-top">
-            <h1>Selamat Datang {{ auth()->check() ? auth()->user()->name : 'Fineshyt' }}</h1>
-        </div>
 
         <!-- stats row -->
         <div class="page">

@@ -20,27 +20,27 @@
                 <span style="font-weight:600; font-size:18px;">Dashboard</span>
             </a>
 
-            <a href="#" class="sidebar-menu-item">
+            <a href="{{ route('dashboard.pengguna') }}" class="sidebar-menu-item">
                 <img src="{{ asset('img/admin/pengguna.png') }}" class="icon" alt="pengguna">
                 <span style="font-weight:600; font-size:18px;">Pengguna</span>
             </a>
 
-            <a href="#" class="sidebar-menu-item">
+            <a href="{{ route('dashboard.kost') }}" class="sidebar-menu-item">
                 <img src="{{ asset('img/admin/kos.png') }}" class="icon" alt="kos">
                 <span style="font-weight:600; font-size:18px;">Data Kost</span>
             </a>
 
-            <a href="#" class="sidebar-menu-item">
+            <a href="{{ route('dashboard.laporan') }}" class="sidebar-menu-item">
                 <img src="{{ asset('img/admin/laporan.png') }}" class="icon" alt="dashboard">
                 <span style="font-weight:600; font-size:18px;">Laporan</span>
             </a>
 
-            <a href="#" class="sidebar-menu-item">
+            <a href="{{ route('dashboard.aktivitas') }}" class="sidebar-menu-item">
                 <img src="{{ asset('img/admin/aktivitas.png') }}" class="icon" alt="aktivitas">
                 <span style="font-weight:600; font-size:18px;">Aktivitas</span>
             </a>
 
-            <a href="#" class="sidebar-menu-item">
+            <a href="{{ route('dashboard.pengaturan') }}" class="sidebar-menu-item">
                 <img src="{{ asset('img/admin/pengaturan.png') }}" class="icon" alt="pengaturan">
                 <span style="font-weight:600; font-size:18px;">Pengaturan</span>
             </a>
@@ -53,3 +53,9 @@
             </a>
         </div>
     </div>
+
+    <div class="main-area">
+        <!-- top orange header (full width inside content) -->
+        <div class="header-top">
+            <h1>Selamat Datang {{ auth()->check() ? auth()->user()->name : 'Fineshyt' }}</h1>
+        </div>

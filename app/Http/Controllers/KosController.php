@@ -6,7 +6,7 @@ use App\Models\Kos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class KostController extends Controller
+class KosController extends Controller
 {
     public function index()
     {
