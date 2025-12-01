@@ -46,4 +46,5 @@ class KosSearchController extends Controller
             'request' => $request,
             'lokasi' => $request->lokasi
         ]);
-}}
+    }
+}

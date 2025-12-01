@@ -80,9 +80,8 @@ Route::middleware(['auth', 'role:pencari'])->group(function () {
         return view('pencari.landing');
     })->middleware('role:pencari');
     // PENCARI KOST DETAIL
-    Route::get('/pencari/kost/{id}', function ($id) {
-        return view('pencari.detail_kost', ['id' => $id]);
-    })->name('pencari.detail_kost');
+    Route::get('/detail_kost', function () {
+        return view('pencari.detail_kost');
     });
     // PENCARI KOST LIST
     Route::get('/kost', function () {
@@ -100,6 +99,7 @@ Route::middleware(['auth', 'role:pencari'])->group(function () {
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/favorites/{id}', [FavoriteController::class, 'store'])->name('favorites.store');
     Route::delete('/favorites/{id}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
+});
 
 // ======================
 // ROLE: ADMIN

@@ -15,7 +15,7 @@
 
             <nav class="d-flex align-items-center" style="gap: 10px;">
                 <a href="#">Home</a>
-                <a href="{{ route('pencari.detail_kost', $kost->id) }}">Kost</a>
+                <a href="#">Kost</a>
                 <a href="#">Favorit</a>
                 <a href="#">About</a>
             </nav>
