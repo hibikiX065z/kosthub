@@ -47,20 +47,20 @@ Route::post('/register-pencari', [AuthController::class, 'registerPencari'])->na
 // ======================
 Route::middleware(['auth', 'role:pemilik'])->group(function () {
     Route::get('/pemilik', function () {
-            return view('pemilik.landing');
-        })->middleware('role:pemilik');
+        return view('pemilik.landing');
+    })->middleware('role:pemilik');
     Route::get('/pemilik/profile', [AuthController::class, 'profilePemilik'])
         ->name('pemilik.profile');
-    Route::post('/logout', function() {
-            Auth::logout();
-            return redirect('/'); // arahkan ke landing page
-            })->name('logout');
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/'); // arahkan ke landing page
+    })->name('logout');
 
     Route::get('/kos/create', [KosController::class, 'create'])->name('kos.create');
     Route::post('/kos', [KosController::class, 'store'])->name('kos.store');
     Route::delete('/kos/{kos}', [KosController::class, 'destroy'])->name('kos.destroy');
     // UPDATE KOS
-Route::put('/kos/{kos}', [KostController::class, 'update'])->name('kos.update');
+    Route::put('/kos/{kos}', [KostController::class, 'update'])->name('kos.update');
 });
 
 // ======================
@@ -69,33 +69,42 @@ Route::put('/kos/{kos}', [KostController::class, 'update'])->name('kos.update');
 Route::middleware(['auth', 'role:pencari'])->group(function () {
     Route::get('/pencari', function () {
         return view('pencari.kost');
-        })->middleware('role:pencari');
+    })->middleware('role:pencari');
     Route::get('/pencari/profile', [AuthController::class, 'profilePencari'])
         ->name('pencari.profile');
-    Route::post('/logout', function() {
-            Auth::logout();
-            return redirect('/'); // arahkan ke landing page
-            })->name('logout');
-        
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/'); // arahkan ke landing page
+    })->name('logout');
+
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/favorites/{id}', [FavoriteController::class, 'store'])->name('favorites.store');
     Route::delete('/favorites/{id}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
-    Route::post('/logout', function() {
-            Auth::logout();
-            return redirect('/'); // arahkan ke landing page
-            })->name('logout');
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/'); // arahkan ke landing page
+    })->name('logout');
 });
 
 // ======================
 // ROLE: ADMIN
 // ======================
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Redirect otomatis /admin -> /dashboard/admin
+    Route::get('/admin', function () {
+        return redirect()->route('dashboard.admin');
+    });
+    // Dashboard Admin
     Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('dashboard.admin');
-     Route::post('/logout', function() {
-            Auth::logout();
-            return redirect('/'); // arahkan ke landing page
-            })->name('logout');
+    // Logout
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/');
+    })->name('logout');
 });
+
+
+
 
 Route::get('/search', [KosController::class, 'search'])->name('kos.search');
 
