@@ -1,5 +1,4 @@
 @extends('layouts.footer')
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="/css/kost.css" />
 @section('content')
@@ -14,10 +13,10 @@
         <div class="d-flex align-items-center" style="gap: 24px;">
 
             <nav class="d-flex align-items-center" style="gap: 10px;">
-                <a href="#">Home</a>
-                <a href="#">Kost</a>
-                <a href="#">Favorit</a>
-                <a href="#">About</a>
+                <a href="{{ route('pencari.landing') }}">Home</a>
+                <a href="{{ route('pencari.detail_kost') }}">Kost</a>
+                <a href="{{ route('pencari.favorit') }}">Favorit</a>
+                <a href="{{ route('pencari.about') }}">About</a>
             </nav>
 
             <ul class="navbar-nav ms-auto align-items-center">
@@ -142,11 +141,10 @@
                                     <span class="perbulan">per bulan</span>
                                 </div>
 
-                                <button class="btn-lihat">
+                                <a href="{{ route('pencari.detail_kost') }}" class="btn-lihat">
                                     <i class="fa-regular fa-eye"></i>
-
                                     Lihat
-                                </button>
+                                </a>
                             </div>
 
                         </div>
@@ -206,9 +204,9 @@
                                         <span class="rec-price-sub">per bulan</span>
                                     </div>
 
-                                    <button class="rec-view-btn">
+                                    <a href="{{ route('pencari.detail_kost') }}" class="rec-view-btn">
                                          <i class="fa-regular fa-eye"></i> Lihat
-                                    </button>
+                                    </a>
                                 </div>
 
                                 </div>

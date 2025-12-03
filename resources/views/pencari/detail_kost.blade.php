@@ -1,11 +1,14 @@
-@extends('layouts.main')
+@extends('layouts.footer')
 <link rel="stylesheet" href="/css/detail_kost.css" />
+<link rel="stylesheet" href="/css/navbar.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 @section('content')
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <body>
 
-
+        @include('navbar.navbar_fitur')
 
         <section class="detail-section">
 
@@ -294,28 +297,28 @@
 
                                 <div class="rec-over">
                                     <div class="rec-info-row">
-                                    <h4 class="rec-name">Indah Kost</h4>
+                                        <h4 class="rec-name">Indah Kost</h4>
 
-                                    <div class="rec-rating">
-                                        <i class="fa-solid fa-star"></i> 3.5
-                                    </div>
-                                </div>
-
-
-                                <div class="rec-footer">
-                                    <div class="rec-price">
-                                        Rp 1.000.000 
-                                        <span class="rec-price-sub">per bulan</span>
+                                        <div class="rec-rating">
+                                            <i class="fa-solid fa-star"></i> 3.5
+                                        </div>
                                     </div>
 
-                                    <button class="rec-view-btn">
-                                         <i class="fa-regular fa-eye"></i> Lihat
-                                    </button>
-                                </div>
+
+                                    <div class="rec-footer">
+                                        <div class="rec-price">
+                                            Rp 1.000.000
+                                            <span class="rec-price-sub">per bulan</span>
+                                        </div>
+
+                                        <button class="rec-view-btn">
+                                            <i class="fa-regular fa-eye"></i> Lihat
+                                        </button>
+                                    </div>
 
                                 </div>
 
-                                
+
                             </div>
                         @endfor
 
@@ -327,78 +330,78 @@
         </section>
 
 
-  
 
 
-      <script>
-function initSlider(sliderBox) {
 
-    let track = sliderBox.querySelector(".slider-track");
-    let imgs = track.querySelectorAll("img");
-    let dotsContainer = sliderBox.querySelector(".slider-dots");
+        <script>
+            function initSlider(sliderBox) {
 
-    let index = 0;
+                let track = sliderBox.querySelector(".slider-track");
+                let imgs = track.querySelectorAll("img");
+                let dotsContainer = sliderBox.querySelector(".slider-dots");
 
-    imgs.forEach((_, i) => {
-        let dot = document.createElement("span");
-        if (i === 0) dot.classList.add("active");
-        dot.dataset.index = i;
-        dotsContainer.appendChild(dot);
-    });
+                let index = 0;
 
-    let dots = dotsContainer.querySelectorAll("span");
+                imgs.forEach((_, i) => {
+                    let dot = document.createElement("span");
+                    if (i === 0) dot.classList.add("active");
+                    dot.dataset.index = i;
+                    dotsContainer.appendChild(dot);
+                });
 
-    function updateSlide() {
-        track.style.transform = `translateX(-${index * 100}%)`;
-        dots.forEach(d => d.classList.remove("active"));
-        dots[index].classList.add("active");
-    }
+                let dots = dotsContainer.querySelectorAll("span");
 
-    let autoSlide = setInterval(() => {
-        index = (index + 1) % imgs.length;
-        updateSlide();
-    }, 3000);
+                function updateSlide() {
+                    track.style.transform = `translateX(-${index * 100}%)`;
+                    dots.forEach(d => d.classList.remove("active"));
+                    dots[index].classList.add("active");
+                }
 
-    let isDown = false;
-    let startX = 0;
+                let autoSlide = setInterval(() => {
+                    index = (index + 1) % imgs.length;
+                    updateSlide();
+                }, 3000);
 
-    sliderBox.addEventListener("pointerdown", (e) => {
-        e.stopPropagation(); // ⛔ CEGAH BENTROK
-        isDown = true;
-        startX = e.clientX;
-        clearInterval(autoSlide);
-    });
+                let isDown = false;
+                let startX = 0;
 
-    sliderBox.addEventListener("pointerup", (e) => {
-        e.stopPropagation(); // ⛔ CEGAH BENTROK
-        if (!isDown) return;
-        isDown = false;
+                sliderBox.addEventListener("pointerdown", (e) => {
+                    e.stopPropagation(); // ⛔ CEGAH BENTROK
+                    isDown = true;
+                    startX = e.clientX;
+                    clearInterval(autoSlide);
+                });
 
-        let diff = e.clientX - startX;
-        if (diff > 50) index = Math.max(0, index - 1);
-        if (diff < -50) index = Math.min(imgs.length - 1, index + 1);
+                sliderBox.addEventListener("pointerup", (e) => {
+                    e.stopPropagation(); // ⛔ CEGAH BENTROK
+                    if (!isDown) return;
+                    isDown = false;
 
-        updateSlide();
+                    let diff = e.clientX - startX;
+                    if (diff > 50) index = Math.max(0, index - 1);
+                    if (diff < -50) index = Math.min(imgs.length - 1, index + 1);
 
-        autoSlide = setInterval(() => {
-            index = (index + 1) % imgs.length;
-            updateSlide();
-        }, 3000);
-    });
+                    updateSlide();
 
-    dots.forEach(dot => {
-        dot.addEventListener("click", (e) => {
-            e.stopPropagation(); // ⛔ CEGAH BENTROK
-            index = parseInt(dot.dataset.index);
-            updateSlide();
-        });
-    });
-}
+                    autoSlide = setInterval(() => {
+                        index = (index + 1) % imgs.length;
+                        updateSlide();
+                    }, 3000);
+                });
 
-document.querySelectorAll(".slider-box").forEach(slider => {
-    initSlider(slider);
-});
-</script>
+                dots.forEach(dot => {
+                    dot.addEventListener("click", (e) => {
+                        e.stopPropagation(); // ⛔ CEGAH BENTROK
+                        index = parseInt(dot.dataset.index);
+                        updateSlide();
+                    });
+                });
+            }
+
+            document.querySelectorAll(".slider-box").forEach(slider => {
+                initSlider(slider);
+            });
+        </script>
 
 
 
@@ -417,79 +420,79 @@ document.querySelectorAll(".slider-box").forEach(slider => {
 
 
 
-      <script>
-(function() {
+        <script>
+            (function () {
 
-    let index = 0;
-    const track = document.querySelector(".review-track");
-    const items = document.querySelectorAll(".review-item");
-    const barContainer = document.querySelector(".slide-bars");
+                let index = 0;
+                const track = document.querySelector(".review-track");
+                const items = document.querySelectorAll(".review-item");
+                const barContainer = document.querySelector(".slide-bars");
 
-    items.forEach((_, i) => {
-        const bar = document.createElement("div");
-        bar.dataset.index = i;
-        if (i === 0) bar.classList.add("active");
-        barContainer.appendChild(bar);
-    });
+                items.forEach((_, i) => {
+                    const bar = document.createElement("div");
+                    bar.dataset.index = i;
+                    if (i === 0) bar.classList.add("active");
+                    barContainer.appendChild(bar);
+                });
 
-    const bars = document.querySelectorAll(".slide-bars div");
+                const bars = document.querySelectorAll(".slide-bars div");
 
-    function updateSlider() {
-        track.style.transform = `translateX(-${index * 100}%)`;
-        bars.forEach(b => b.classList.remove("active"));
-        bars[index].classList.add("active");
-    }
+                function updateSlider() {
+                    track.style.transform = `translateX(-${index * 100}%)`;
+                    bars.forEach(b => b.classList.remove("active"));
+                    bars[index].classList.add("active");
+                }
 
-    bars.forEach(bar => {
-        bar.addEventListener("click", () => {
-            index = parseInt(bar.dataset.index);
-            updateSlider();
-        });
-    });
+                bars.forEach(bar => {
+                    bar.addEventListener("click", () => {
+                        index = parseInt(bar.dataset.index);
+                        updateSlider();
+                    });
+                });
 
-    setInterval(() => {
-        index = (index + 1) % items.length;
-        updateSlider();
-    }, 4000);
+                setInterval(() => {
+                    index = (index + 1) % items.length;
+                    updateSlider();
+                }, 4000);
 
-    let startX = 0;
-    let isDragging = false;
+                let startX = 0;
+                let isDragging = false;
 
-    track.addEventListener("mousedown", (e) => {
-        isDragging = true;
-        startX = e.clientX;
-    });
+                track.addEventListener("mousedown", (e) => {
+                    isDragging = true;
+                    startX = e.clientX;
+                });
 
-    track.addEventListener("mouseup", (e) => {
-        if (!isDragging) return;
-        let diff = e.clientX - startX;
+                track.addEventListener("mouseup", (e) => {
+                    if (!isDragging) return;
+                    let diff = e.clientX - startX;
 
-        if (diff > 50) index = (index - 1 + items.length) % items.length;
-        else if (diff < -50) index = (index + 1) % items.length;
+                    if (diff > 50) index = (index - 1 + items.length) % items.length;
+                    else if (diff < -50) index = (index + 1) % items.length;
 
-        updateSlider();
-        isDragging = false;
-    });
+                    updateSlider();
+                    isDragging = false;
+                });
 
-    track.addEventListener("touchstart", (e) => {
-        startX = e.touches[0].clientX;
-    });
+                track.addEventListener("touchstart", (e) => {
+                    startX = e.touches[0].clientX;
+                });
 
-    track.addEventListener("touchend", (e) => {
-        let diff = e.changedTouches[0].clientX - startX;
+                track.addEventListener("touchend", (e) => {
+                    let diff = e.changedTouches[0].clientX - startX;
 
-        if (diff > 50) index = (index - 1 + items.length) % items.length;
-        else if (diff < -50) index = (index + 1) % items.length;
+                    if (diff > 50) index = (index - 1 + items.length) % items.length;
+                    else if (diff < -50) index = (index + 1) % items.length;
 
-        updateSlider();
-    });
+                    updateSlider();
+                });
 
-})();
-</script>
+            })();
+        </script>
 
 
 
-<!-- pop up -->
+        <!-- pop up -->
         <script>
 
             let selectedRating = 0;
@@ -564,7 +567,7 @@ document.querySelectorAll(".slider-box").forEach(slider => {
         </script>
 
 
-  <script>
+        <script>
             const track = document.querySelector(".rec-carousel-track");
             const prevBtn = document.querySelector(".rec-btn-row .rec-btn:first-child");
             const nextBtn = document.querySelector(".rec-btn-row .rec-btn:last-child");
@@ -579,7 +582,7 @@ document.querySelectorAll(".slider-box").forEach(slider => {
                 track.style.transform = `translateX(-${index * cardWidth}px)`;
             }
 
-          
+
             nextBtn.addEventListener("click", () => {
                 index++;
                 updateCarousel();
@@ -590,7 +593,7 @@ document.querySelectorAll(".slider-box").forEach(slider => {
                 updateCarousel();
             });
 
-            
+
             let isDragging = false;
             let startX = 0;
             let prevTranslate = 0;
@@ -626,7 +629,7 @@ document.querySelectorAll(".slider-box").forEach(slider => {
                 updateCarousel();
             });
 
-           
+
             track.addEventListener("touchstart", (e) => {
                 isDragging = true;
                 startX = e.touches[0].clientX;
@@ -652,18 +655,18 @@ document.querySelectorAll(".slider-box").forEach(slider => {
             });
         </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('.rec-like-btn').forEach(icon => {
-        icon.addEventListener('click', function() {
-            this.classList.toggle('active');
-            this.querySelector('i').classList.toggle('fa-regular');
-            this.querySelector('i').classList.toggle('fa-solid');
-        });
-    });
-});
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll('.rec-like-btn').forEach(icon => {
+                    icon.addEventListener('click', function () {
+                        this.classList.toggle('active');
+                        this.querySelector('i').classList.toggle('fa-regular');
+                        this.querySelector('i').classList.toggle('fa-solid');
+                    });
+                });
+            });
 
-</script>
+        </script>
     </body>
 
     </html>

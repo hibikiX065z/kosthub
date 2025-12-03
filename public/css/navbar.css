@@ -11,8 +11,8 @@
 }
 
 .logo {
-    width: 200px;     
-    height: auto;      
+    width: 200px;
+    height: auto;
     object-fit: contain;
 }
 
@@ -34,7 +34,6 @@
     transform: scale(0.96);
 }
 
-
 /* Tombol Masuk */
 .masuk-btn {
     background-color: #000;
@@ -53,26 +52,85 @@
 }
 
 .daftar-btn {
-  border: 2px solid #ff7a00;
-  color: #ff7a00;
-  font-weight: 600;
-  transition: all 0.3s ease;
+    border: 2px solid #ff7a00;
+    color: #ff7a00;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 .daftar-btn:hover {
-  background-color: #ff7a00;
-  color: white;
-  box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
+    background-color: #ff7a00;
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
 }
 
 .masuk-btn {
-  background: linear-gradient(45deg, #ff7a00, #ffb347);
-  border: none;
-  color: white;
-  font-weight: 600;
-  box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
-  transition: all 0.3s ease;
+    background: linear-gradient(45deg, #ff7a00, #ffb347);
+    border: none;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
+    transition: all 0.3s ease;
 }
 .masuk-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(255, 122, 0, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 122, 0, 0.5);
+}
+
+/* NAVBAR WRAPPER */
+.navbar {
+    background-color: #fff;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LOGO */
+.logo {
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* MENU + PROFILE WRAPPER */
+.custom-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* MENU LINK */
+.custom-header .d-flex a {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+}
+
+.custom-header .d-flex a:hover {
+    background: rgb(255, 132, 8);
+    color: #fff;
+}
+
+/* PROFILE DROPDOWN */
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav img {
+    cursor: pointer;
+}
+
+.nav-item.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute !important;
+    right: 0;
+    z-index: 9999 !important;
 }

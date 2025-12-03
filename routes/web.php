@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KosSearchController;
 use App\Http\Controllers\KosController;
+use App\Http\Controllers\KosAdminController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PemilikController;
@@ -38,7 +39,7 @@ Route::middleware(['auth', 'role:pemilik'])->group(function () {
     // PEMILIK LANDING
     Route::get('/pemilik', function () {
         return view('pemilik.landing');
-    })->middleware('role:pemilik');
+    })->name('pemilik.landing');
     // PEMILIK PROFILE
     Route::get('/pemilik/profile', [AuthController::class, 'profilePemilik'])
         ->name('pemilik.profile');
@@ -46,9 +47,9 @@ Route::middleware(['auth', 'role:pemilik'])->group(function () {
     // PEMILIK KOS TAMBAH VIEW
     Route::get('/pemilik/kos/tambah', function () {
         return view('pemilik.tambah-kos');
-    })->name('pemilik.kos.tambah');
+    })->name('pemilik.tambah-kos');
     // Halaman form tambah kos
-    Route::get('/pemilik/kos/tambah', [PemilikController::class, 'create'])->name('pemilik.kos.create');
+    Route::get('/pemilik/kost', [PemilikController::class, 'index'])->name('pemilik.kost');
     // Proses tambah kos
     Route::post('/pemilik/kos/store', [PemilikController::class, 'store'])->name('pemilik.kos.store');
 
@@ -64,6 +65,11 @@ Route::middleware(['auth', 'role:pemilik'])->group(function () {
     Route::get('/search', [KosSearchController::class, 'search'])->name('search.kos');
     Route::get('/search/filter', [KosSearchController::class, 'filter'])->name('filter.kos');
 
+    // PEMILIK ABOUT
+    Route::get('/pemilik/about', function () {
+        return view('pemilik.about');
+    })->name('pemilik.about');
+
     // LOGOUT
     Route::post('/logout', function () {
         Auth::logout();
@@ -78,15 +84,23 @@ Route::middleware(['auth', 'role:pencari'])->group(function () {
     // PENCARI LANDING
     Route::get('/pencari', function () {
         return view('pencari.landing');
-    })->middleware('role:pencari');
-    // PENCARI KOST DETAIL
-    Route::get('/detail_kost', function () {
+    })->name('pencari.landing');
+    // PENCARI DETAIL KOST
+    Route::get('/pencari/detail_kost', function () {
         return view('pencari.detail_kost');
-    });
+    })->name('pencari.detail_kost');
     // PENCARI KOST LIST
     Route::get('/kost', function () {
         return view('pencari.landing');
-    });
+    })->name('pencari.kost');
+    // PENCARI ABOUT
+    Route::get('/pencari/about', function () {
+        return view('pencari.about');
+    })->name('pencari.about');
+    // PENCARI FAVORIT
+    Route::get('/pencari/favorit', function () {
+        return view('pencari.favorit');
+    })->name('pencari.favorit');
     // PENCARI PROFILE
     Route::get('/pencari/profile', [AuthController::class, 'profilePencari'])
         ->name('pencari.profile');
@@ -105,22 +119,32 @@ Route::middleware(['auth', 'role:pencari'])->group(function () {
 // ROLE: ADMIN
 // ======================
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    // Redirect otomatis /admin -> /dashboard/admin
+
+    // Dashboard utama
     Route::get('/admin', function () {
         return redirect()->route('dashboard.admin');
     });
-    // Dashboard Admin
+
     Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('dashboard.admin');
-    // Data Pengguna
     Route::get('/dashboard/pengguna', [AdminController::class, 'pengguna'])->name('dashboard.pengguna');
-    // Data Kost
-    Route::get('/dashboard/kost', [AdminController::class, 'kost'])->name('dashboard.kost');
-    // Data Laporan
     Route::get('/dashboard/laporan', [AdminController::class, 'laporan'])->name('dashboard.laporan');
-    // Data Aktivitas
     Route::get('/dashboard/aktivitas', [AdminController::class, 'aktivitas'])->name('dashboard.aktivitas');
-    // Pengaturan Admin
     Route::get('/dashboard/pengaturan', [AdminController::class, 'pengaturan'])->name('dashboard.pengaturan');
+
+    // ======================
+    // KOS MANAGEMENT (FULL)
+    // ======================
+    Route::get('/dashboard/kos', [AdminController::class, 'kost'])->name('dashboard.kost');
+
+    // approve
+    Route::post('/dashboard/kos/{id}/approve', [AdminController::class, 'approve'])->name('kos.approve');
+
+    // reject
+    Route::post('/dashboard/kos/{id}/reject', [AdminController::class, 'reject'])->name('kos.reject');
+
+    // delete
+    Route::delete('/dashboard/kos/{id}', [AdminController::class, 'destroy'])->name('kos.destroy');
+
     // Logout
     Route::post('/logout', function () {
         Auth::logout();

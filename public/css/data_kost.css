@@ -1,0 +1,60 @@
+/* Wrapper utama */
+.content-wrapper {
+    width: 100%;
+    padding: 20px;
+}
+
+/* Header Box "Data Kos" */
+.header-box {
+    background: white;
+    padding: 18px 22px;
+    border-radius: 6px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* Container Search */
+.search-container {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.12);
+}
+
+/* Input */
+.search-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #ff6f00;
+}
+
+/* Tombol Search */
+.btn-search {
+    padding: 9px 20px;
+    background: white;
+    color: #ff6f00;
+    border: 2px solid #ff6f00;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s;
+}
+
+.btn-search:hover {
+    background: #ff6f00;
+    color: white;
+}

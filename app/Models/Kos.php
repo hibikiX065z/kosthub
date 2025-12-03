@@ -12,10 +12,10 @@ class Kos extends Model
     protected $table = 'kos';
 
     protected $fillable = [
-        'user_id',
+        'pemilik_id',
 
         'gambar',
-        'fasilitas', 
+        'fasilitas',
 
         // STEP 1 — Informasi Dasar
         'nama_kos',
@@ -65,8 +65,8 @@ class Kos extends Model
     ];
 
     // relasi owner
-    public function owner()
+    public function pemilik()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
 }
