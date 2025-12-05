@@ -14,9 +14,6 @@ class Kos extends Model
     protected $fillable = [
         'pemilik_id',
 
-        'gambar',
-        'fasilitas',
-
         // STEP 1 — Informasi Dasar
         'nama_kos',
         'tipe',
@@ -38,13 +35,7 @@ class Kos extends Model
         'foto_kamar',
         'foto_kamar_mandi',
         'foto_lain',
-
-        // STEP 4 — Fasilitas
-        'fasilitas_umum',
-        'fasilitas_kamar',
-        'fasilitas_kamar_mandi',
-        'parkir',
-
+        
         // STEP 5 — Kamar
         'total_kamar',
         'kamar_tersedia',
@@ -52,6 +43,7 @@ class Kos extends Model
         // STEP 6 — Harga
         'harga_per_bulan',
         'biaya_tambahan',
+        'status',
     ];
 
     protected $casts = [
@@ -67,6 +59,6 @@ class Kos extends Model
     // relasi owner
     public function pemilik()
     {
-        return $this->belongsTo(\App\Models\User::class, 'user_id');
+        return $this->belongsTo(\App\Models\User::class, 'pemilik_id');
     }
 }

@@ -1,59 +1,89 @@
-<div class="p-6">
+@extends('layouts.footer')
+<link rel="stylesheet" href="/css/navbar.css" />
+<link rel="stylesheet" href="/css/pemilik_kost.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <h2 class="text-2xl font-semibold mb-4">Daftar Pengajuan Kos</h2>
+@section('content')
 
-    <div class="bg-white shadow rounded-lg p-4">
-        <table class="w-full border-collapse">
-            <thead>
-                <tr class="bg-gray-100 border-b">
-                    <th class="p-3 text-left">Nama Kos</th>
-                    <th class="p-3 text-left">Pemilik</th>
-                    <th class="p-3 text-left">Lokasi</th>
-                    <th class="p-3 text-left">Status</th>
-                    <th class="p-3 text-left">Aksi</th>
-                </tr>
-            </thead>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-            <tbody>
-                @foreach ($kosList as $kos)
-                <tr class="border-b">
-                    <td class="p-3">{{ $kos->nama }}</td>
-                    <td class="p-3">{{ $kos->pemilik->name }}</td>
-                    <td class="p-3">{{ $kos->lokasi }}</td>
+<body>
 
-                    <td class="p-3">
-                        @if ($kos->status == 'pending')
-                            <span class="px-3 py-1 text-sm bg-yellow-200 text-yellow-800 rounded">Pending</span>
-                        @elseif ($kos->status == 'approved')
-                            <span class="px-3 py-1 text-sm bg-green-200 text-green-800 rounded">Disetujui</span>
-                        @else
-                            <span class="px-3 py-1 text-sm bg-red-200 text-red-800 rounded">Ditolak</span>
-                        @endif
-                    </td>
+    @include('navbar.navbar_pemilik')
 
-                    <td class="p-3 flex gap-2">
-                        @if ($kos->status == 'pending')
-                            <form action="{{ route('admin.kos.approve', $kos->id) }}" method="POST">
+    <div class="page-container">
+
+        <h2 class="page-title">Kost Saya</h2>
+
+        <div class="kos-grid">
+            @forelse($kos as $item)
+                <div class="kos-card">
+
+                    <!-- FOTO -->
+                    <img src="{{ $item->foto_depan ? asset('storage/' . $item->foto_depan) : '/img/no-image.png' }}"
+                        class="kos-img">
+
+                    <div class="kos-body">
+
+                        <h3 class="kos-title">{{ $item->nama_kos }}</h3>
+
+                        <p class="kos-location">
+                            <i class="fa-solid fa-location-dot"></i>
+                            {{ $item->alamat }}
+                        </p>
+
+                        <p class="kos-price">
+                            Rp {{ number_format($item->harga_per_bulan) }} / bulan
+                        </p>
+
+                        <p class="kos-stats">
+                            <i class="fa-solid fa-door-open"></i> Total: {{ $item->total_kamar }} |
+                            <i class="fa-solid fa-bed"></i> Tersedia: {{ $item->kamar_tersedia }}
+                        </p>
+
+                        <!-- STATUS -->
+                        <p class="kos-status">
+                            @if($item->status === 'approved')
+                                <span class="badge badge-approved"><i class="fa-solid fa-check"></i> Disetujui</span>
+                            @elseif($item->status === 'rejected')
+                                <span class="badge badge-rejected"><i class="fa-solid fa-xmark"></i> Ditolak</span>
+                            @else
+                                <span class="badge badge-pending"><i class="fa-solid fa-clock"></i> Menunggu</span>
+                            @endif
+                        </p>
+
+                        <!-- BUTTONS -->
+                        <div class="kos-actions">
+                            <a href="{{ route('pemilik.kos.edit', $item->id) }}">
+                                <button class="btn-edit">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </button>
+                            </a>
+
+                            <form action="{{ route('pemilik.kos.destroy', $item->id) }}" method="POST"
+                                onsubmit="return confirm('Hapus kos ini?')">
                                 @csrf
-                                <button class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700">
-                                    Approve
+                                @method('DELETE')
+                                <button class="btn-delete">
+                                    <i class="fa-solid fa-trash"></i> Hapus
                                 </button>
                             </form>
+                        </div>
 
-                            <form action="{{ route('admin.kos.reject', $kos->id) }}" method="POST">
-                                @csrf
-                                <button class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
-                                    Reject
-                                </button>
-                            </form>
-                        @else
-                            <span class="text-gray-500 text-sm">Tidak ada aksi</span>
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
+                    </div>
 
-        </table>
+                </div>
+            @empty
+
+                <div class="no-data-box">
+                    <img src="/img/empty.png" width="180px">
+                    <p>Belum ada kos yang ditambahkan.</p>
+                </div>
+
+            @endforelse
+        </div>
+
     </div>
-</div>
+</body>
+
+@endsection

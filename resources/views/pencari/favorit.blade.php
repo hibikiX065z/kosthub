@@ -8,4 +8,4 @@
 
     <body>
 
-        @include('navbar.navbar_fitur')
+        @include('navbar.navbar_pencari')

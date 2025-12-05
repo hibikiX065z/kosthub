@@ -1,60 +1,150 @@
-/* Wrapper utama */
-.content-wrapper {
-    width: 100%;
-    padding: 20px;
+.content-card {
+    border-radius: 14px;
 }
-
-/* Header Box "Data Kos" */
-.header-box {
-    background: white;
-    padding: 18px 22px;
-    border-radius: 6px;
-    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-
-/* Container Search */
-.search-container {
-    background: white;
-    padding: 20px 25px;
-    border-radius: 8px;
+.search-row {
     display: flex;
-    gap: 15px;
+    gap: 12px;
     align-items: center;
-    box-shadow: 0px 3px 10px rgba(0,0,0,0.12);
 }
 
-/* Input */
 .search-input {
-    flex: 1;
-    padding: 10px 15px;
+    background: #fff;
     border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
-    outline: none;
+    padding: 10px 14px;
+    border-radius: 20px;
+    width: 300px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
 }
 
-.search-input:focus {
-    border-color: #ff6f00;
-}
-
-/* Tombol Search */
-.btn-search {
-    padding: 9px 20px;
-    background: white;
-    color: #ff6f00;
-    border: 2px solid #ff6f00;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
+.search-btn {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #f47a1f;
+    background: #fff;
+    color: #f47a1f;
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 6px;
-    transition: 0.2s;
+    gap: 3px;
 }
 
-.btn-search:hover {
-    background: #ff6f00;
-    color: white;
+.search-btn:hover {
+    background: #f47a1f;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+
+.kost-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 22px;
+}
+
+
+.kost-card {
+    background: var(--card-bg);
+    border-radius: var(--round);
+    box-shadow: var(--soft-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    transition: 0.25s ease;
+}
+
+
+.kost-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.kost-body {
+    padding: 16px 18px;
+}
+
+.kost-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.kost-location {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+
+.kost-price {
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 12px;
+}
+
+
+.badge {
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 10px;
+}
+
+.badge-success { background:#d4f6d4; color:#2b8b56; }
+.badge-danger { background:#ffc9c9; color:#c0392b; }
+.badge-pending { background:#ececec; color:#555; }
+
+
+.kost-actions {
+    display: flex;
+    gap: 7px;
+    margin-top: 14px;
+}
+
+.kost-actions button {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.btn-action i {
+    font-size: 15px;
+}
+
+.btn-approve { background:#22c55e; color:#fff; }
+.btn-approve:hover { background: #16a34a; }
+
+.btn-reject { background:#f59e0b; color:#fff; }
+.btn-reject:hover { background: #d97706; }
+
+.btn-delete { background:#ef4444; color:#fff; }
+.btn-delete:hover { background: #dc2626; }
+
+.btn-action:disabled {
+    background: #bdbdbd !important;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.no-data {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    margin-top: 40px;
 }

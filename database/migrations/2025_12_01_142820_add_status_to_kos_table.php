@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('kos', function (Blueprint $table) {
-            $table->enum('status', ['aktif', 'tidak'])->default('aktif');
+            $table->string('status')->default('pending')->after('biaya_tambahan');
         });
     }
 

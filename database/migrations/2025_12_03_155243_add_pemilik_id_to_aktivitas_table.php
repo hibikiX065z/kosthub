@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('kos', function (Blueprint $table) {
-            $table->unsignedBigInteger('pemilik_id')->after('id');
+        Schema::table('aktivitas', function (Blueprint $table) {
+            $table->unsignedBigInteger('pemilik_id')->nullable()->after('id');
         });
     }
 
     public function down()
     {
-        Schema::table('kos', function (Blueprint $table) {
+        Schema::table('aktivitas', function (Blueprint $table) {
             $table->dropColumn('pemilik_id');
         });
     }

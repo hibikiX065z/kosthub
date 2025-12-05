@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KosSearchController;
 use App\Http\Controllers\KosController;
-use App\Http\Controllers\KosAdminController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PemilikController;
@@ -36,28 +35,41 @@ Route::post('/register-pencari', [AuthController::class, 'registerPencari'])->na
 // ROLE: PEMILIK
 // ======================
 Route::middleware(['auth', 'role:pemilik'])->group(function () {
-    // PEMILIK LANDING
+
     Route::get('/pemilik', function () {
         return view('pemilik.landing');
     })->name('pemilik.landing');
-    // PEMILIK PROFILE
+
+    Route::get('/pemilik/edit-kos', function () {
+        return view('pemilik.edit-kos');
+    })->name('pemilik.edit-kos');
+
     Route::get('/pemilik/profile', [AuthController::class, 'profilePemilik'])
         ->name('pemilik.profile');
 
-    // PEMILIK KOS TAMBAH VIEW
-    Route::get('/pemilik/kos/tambah', function () {
-        return view('pemilik.tambah-kos');
-    })->name('pemilik.tambah-kos');
-    // Halaman form tambah kos
-    Route::get('/pemilik/kost', [PemilikController::class, 'index'])->name('pemilik.kost');
-    // Proses tambah kos
+    // =======================
+    // MANAGE DATA KOS (PEMILIK)
+    // =======================
+    
+    // List kos milik pemilik
+    Route::get('/pemilik/kos', [PemilikController::class, 'index'])->name('pemilik.kost');
+
+    // Form tambah kos
+    Route::get('/pemilik/kos/tambah', [PemilikController::class, 'create'])->name('pemilik.tambah-kos');
+
+    // Submit tambah kos
     Route::post('/pemilik/kos/store', [PemilikController::class, 'store'])->name('pemilik.kos.store');
 
-    // PEMILIK KOS BUAT, EDIT, DELETE, UPDATE
-    Route::get('/kos/create', [KosController::class, 'create'])->name('kos.create');
-    Route::post('/kos', [KosController::class, 'store'])->name('kos.store');
-    Route::delete('/kos/{kos}', [KosController::class, 'destroy'])->name('kos.destroy');
-    Route::put('/kos/{kos}', [KosController::class, 'update'])->name('kos.update');
+    // Edit kos
+    Route::get('/pemilik/kos/{id}/edit', [PemilikController::class, 'edit'])->name('pemilik.kos.edit');
+
+    // Update kos
+    Route::put('/pemilik/kos/{id}', [PemilikController::class, 'update'])->name('pemilik.kos.update');
+
+    // Hapus kos
+    Route::delete('/pemilik/kos/{id}', [PemilikController::class, 'destroy'])->name('pemilik.kos.destroy');
+
+});
 
     // PEMILIK KOS SEARCH
     Route::get('/search', [KosController::class, 'search'])->name('kos.search');
@@ -75,7 +87,6 @@ Route::middleware(['auth', 'role:pemilik'])->group(function () {
         Auth::logout();
         return redirect('/'); // arahkan ke landing page
     })->name('logout');
-});
 
 // ======================
 // ROLE: PENCARI

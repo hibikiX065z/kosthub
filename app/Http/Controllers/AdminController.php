@@ -7,6 +7,7 @@ use App\Models\Kos;
 use App\Models\Aktivitas;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -16,9 +17,10 @@ class AdminController extends Controller
         return view('dashboard.admin', [
             'title' => 'Dashboard Admin',
             'jumlahPengguna' => User::whereIn('role', ['pencari', 'pemilik'])->count(),
-            'kosAktif' => Kos::where('status', 'aktif')->count(),
-            'jumlahVerifikasi' => Kos::where('status', 'pending')->count(),
-            'aktivitas' => Aktivitas::latest()->limit(5)->get()
+            'kosAktif' => Kos::where('status', 'approved')->count(),
+            'jumlahVerifikasi' => Kos::whereIn('status', ['approved', 'rejected'])->count(),
+            'aktivitas' => Aktivitas::latest()->limit(10)->get(),
+            'menungguVerifikasi' => Kos::where('status', 'pending')->count(),
         ]);
     }
 
@@ -35,36 +37,59 @@ class AdminController extends Controller
     public function kost()
     {
         $kos = Kos::query()
-            ->when(request('nama_kos'), fn($q) => $q->where('nama_kos', 'like', '%'.request('nama_kos').'%'))
-            ->when(request('lokasi'), fn($q) => $q->where('lokasi', 'like', '%'.request('lokasi').'%'))
+            ->when(request('nama_kos'), fn($q) => $q->where('nama_kos', 'like', '%' . request('nama_kos') . '%'))
+            ->when(request('alamat'), fn($q) => $q->where('alamat', 'like', '%' . request('alamat') . '%'))
+            ->when(request('status'), fn($q) => $q->where('status', request('status')))
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('dashboard.kost', compact('kos'));
     }
 
+
     public function approve($id)
     {
         $kos = Kos::findOrFail($id);
-        $kos->status = 'approved';
+        $kos->status = 'approved';   // pastikan enum sesuai di tabel kos
         $kos->save();
 
-        return back()->with('success', 'Kos approved!');
+        Aktivitas::create([
+            'user_id' => Auth::id(),
+            'kegiatan' => "Menyetujui kos: {$kos->nama_kos}"
+        ]);
+
+        return back()->with('success', 'Kos berhasil disetujui dan sekarang aktif 👍');
     }
+
 
     public function reject($id)
     {
         $kos = Kos::findOrFail($id);
-        $kos->status = 'rejected';
+        $kos->status = 'rejected';   // HARUS sesuai enum tabel kos
         $kos->save();
 
-        return back()->with('success', 'Kos rejected!');
+        Aktivitas::create([
+            'user_id' => Auth::id(),
+            'kegiatan' => "Menolak pengajuan kos: {$kos->nama_kos}"
+        ]);
+
+        return back()->with('error', 'Pengajuan kos ditolak ❌');
     }
 
     public function destroy($id)
     {
-        Kos::findOrFail($id)->delete();
-        return back()->with('success', 'Kos berhasil dihapus.');
+        $kos = Kos::findOrFail($id);
+        $namaKos = $kos->nama_kos;
+        $kos->delete();
+
+        Aktivitas::create([
+            'user_id' => Auth::id(),
+            'kegiatan' => "Menghapus kos: {$namaKos}"
+        ]);
+
+        return back()->with('warning', 'Kos telah dihapus ⚠️');
     }
+
 
     public function laporan()
     {

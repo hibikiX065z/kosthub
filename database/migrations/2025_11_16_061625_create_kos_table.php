@@ -11,17 +11,19 @@ return new class extends Migration
         Schema::create('kos', function (Blueprint $table) {
             $table->id();
 
-            // Owner
-            $table->unsignedBigInteger('user_id');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
 
-            // Step 1 — Informasi Dasar
+            // Owner
+            $table->unsignedBigInteger('pemilik_id');
+
+            // Informasi Dasar
             $table->string('nama_kos');
-            $table->string('tipe'); // putra / putri / campur
+            $table->string('tipe');
             $table->text('deskripsi')->nullable();
             $table->text('lokasi')->nullable();
             $table->text('catatan')->nullable();
 
-            // Step 2 — Lokasi
+            // Lokasi
             $table->string('alamat');
             $table->string('provinsi')->nullable();
             $table->string('kabupaten')->nullable();
@@ -30,31 +32,32 @@ return new class extends Migration
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
 
-            // Step 3 — Foto
+            // Foto
             $table->string('foto_depan')->nullable();
             $table->string('foto_jalan')->nullable();
             $table->string('foto_kamar')->nullable();
             $table->string('foto_kamar_mandi')->nullable();
             $table->string('foto_lain')->nullable();
 
-            // Step 4 — Fasilitas (JSON)
+            // Fasilitas
             $table->json('fasilitas_umum')->nullable();
             $table->json('fasilitas_kamar')->nullable();
             $table->json('fasilitas_kamar_mandi')->nullable();
             $table->json('parkir')->nullable();
 
-            // Step 5 — Kamar
+            // Kamar
             $table->integer('total_kamar');
             $table->integer('kamar_tersedia');
 
-            // Step 6 — Harga
+            // Harga
             $table->integer('harga_per_bulan');
             $table->string('biaya_tambahan')->nullable();
 
             $table->timestamps();
 
             // Foreign Key
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('pemilik_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 
