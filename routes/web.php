@@ -94,23 +94,15 @@ Route::middleware(['auth', 'role:pencari'])
             // Search
             Route::get('/search', [KosSearchController::class, 'pencariIndex'])->name('search');
         });
-
     });
 
 
 // ======================
 // ROLE: ADMIN
 // ======================
-// ======================
-// ROLE: ADMIN
-// ======================
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('dashboard.admin');
-     Route::post('/logout', function() {
-            Auth::logout();
-            return redirect('/'); // arahkan ke landing page
-            })->name('logout');
-});
+
+        Route::get('/dashboard/admin', [AdminController::class, 'index'])
+            ->name('dashboard.admin');
 
 
 // ======================
