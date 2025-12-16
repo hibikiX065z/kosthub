@@ -12,7 +12,9 @@ class Kos extends Model
     protected $table = 'kos';
 
     protected $fillable = [
-        'user_id',
+        'pemilik_id',
+
+        // STEP 1 — Informasi Dasar
         'nama_kos',
         'tipe',
         'deskripsi',
@@ -29,14 +31,13 @@ class Kos extends Model
         'foto_kamar',
         'foto_kamar_mandi',
         'foto_lain',
-        'fasilitas_umum',
-        'fasilitas_kamar',
-        'fasilitas_kamar_mandi',
-        'parkir',
+
+        // STEP 5 — Kamar
         'total_kamar',
         'kamar_tersedia',
         'harga_per_bulan',
         'biaya_tambahan',
+        'status',
     ];
 
     protected $casts = [
@@ -48,53 +49,50 @@ class Kos extends Model
         'longitude' => 'float',
     ];
 
-    // RELASI
-    public function owner()
+    // relasi owner
+    public function pemilik()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(\App\Models\User::class, 'pemilik_id');
     }
 
-   public function favorites()
-{
-    return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
-}
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+    }
 
-public function isFavorited()
-{
-    return $this->favorites()->where('user_id', auth()->id())->exists();
-}
+    public function isFavorited()
+    {
+        return $this->favorites()->where('user_id', auth()->id())->exists();
+    }
 
 
     // Accessor foto supaya langsung dapat URL
     public function getFotoDepanUrlAttribute()
     {
-        return $this->foto_depan ? asset('storage/'.$this->foto_depan) : asset('img/default-kos.png');
+        return $this->foto_depan ? asset('storage/' . $this->foto_depan) : asset('img/default-kos.png');
     }
 
     public function getFotoJalanUrlAttribute()
     {
-        return $this->foto_jalan ? asset('storage/'.$this->foto_jalan) : null;
+        return $this->foto_jalan ? asset('storage/' . $this->foto_jalan) : null;
     }
 
     public function getFotoKamarUrlAttribute()
     {
-        return $this->foto_kamar ? asset('storage/'.$this->foto_kamar) : null;
+        return $this->foto_kamar ? asset('storage/' . $this->foto_kamar) : null;
     }
 
     public function getFotoKamarMandiUrlAttribute()
     {
-        return $this->foto_kamar_mandi ? asset('storage/'.$this->foto_kamar_mandi) : null;
+        return $this->foto_kamar_mandi ? asset('storage/' . $this->foto_kamar_mandi) : null;
     }
 
     public function getFotoLainUrlAttribute()
     {
-        return $this->foto_lain ? asset('storage/'.$this->foto_lain) : null;
+        return $this->foto_lain ? asset('storage/' . $this->foto_lain) : null;
     }
-    public function reviews() {
-    return $this->hasMany(Review::class);
-}
-
-public function pemilik() {
-    return $this->belongsTo(User::class, 'pemilik_id');
-}
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

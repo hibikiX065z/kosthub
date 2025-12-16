@@ -83,7 +83,6 @@
             </div>
 
             {{-- ========== START FORM ========== --}}
-            <form action="{{ route('guest.kos.search') }}" method="GET">
 
                 {{-- ========== BAR 1 : SEARCH BAR ========== --}}
                 <div class="input-group mb-4">

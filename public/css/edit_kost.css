@@ -1,0 +1,41 @@
+.edit-container {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+.edit-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 700;
+}
+.input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+.edit-img-preview {
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.btn-orange {
+    background: rgb(255, 128, 17);
+    color: rgb(255, 255, 255);
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-orange:hover {
+    background: rgb(230, 100, 0);
+    transition: 0.25s ease;
+}

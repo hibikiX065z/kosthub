@@ -30,10 +30,10 @@
         <div class="d-flex align-items-center" style="gap: 24px;">
 
             <nav class="d-flex align-items-center" style="gap: 10px;">
-                <a href="#">Home</a>
-                <a href="{{ route('pemilik.kos.index') }}">Kost</a>
-                <a href="{{ route('pemilik.kos.create') }}">Tambah Kost</a>
-                <a href="#">About</a>
+                <a href="{{ route('pemilik.landing') }}">Home</a>
+                <a href="{{ route('pemilik.kost') }}">Kost</a>
+                <a href="{{ route('pemilik.tambah-kos') }}">Tambah Kost</a>
+                <a href="{{ route('pemilik.about') }}">About</a>
             </nav>
 
             <ul class="navbar-nav ms-auto align-items-center">

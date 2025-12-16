@@ -9,139 +9,136 @@ use Illuminate\Support\Facades\Storage;
 
 class KosController extends Controller
 {
+    // HALAMAN LIST
     public function index()
     {
-        $kos = Kos::where('user_id', auth()->id())->paginate(10);
-        return view('pemilik.kos.index', compact('kos'));
+        return view('kost.index');
     }
-    public function pencariindex()
+
+    // HALAMAN DETAIL
+    public function show($id)
     {
-        $kos = Kos::where('user_id', auth()->id())->paginate(10);
-        return view('pencari.kos.index', compact('kos'));
+        $kos = Kos::findOrFail($id);
+        return view('kost.detail', compact('kos'));
     }
-    // Contoh di KosController show() method
-public function show($id)
-{
-    $kos = Kos::findOrFail($id);
 
-    // Decode semua fasilitas
-    $kos->fasilitas_umum = json_decode($kos->fasilitas_umum, true);
-    $kos->fasilitas_kamar = json_decode($kos->fasilitas_kamar, true);
-    $kos->fasilitas_kamar_mandi = json_decode($kos->fasilitas_kamar_mandi, true);
-    $kos->parkir = json_decode($kos->parkir, true);
-
-    return view('pencari.kos.show', compact('kos'));
-}
-
-
+    // CREATE VIEW
     public function create()
     {
-        return view('pemilik.kos.create');
+        return view('kost.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama_kos' => 'required',
-            'tipe' => 'required',
-            'alamat' => 'required',
-            'harga_per_bulan' => 'required|numeric',
-            'total_kamar' => 'required|numeric',
-            'kamar_tersedia' => 'required|numeric',
-            'foto_depan' => 'required|image|mimes:jpg,jpeg,png',
-            'foto_jalan' => 'nullable|image|mimes:jpg,jpeg,png',
-            'foto_kamar' => 'nullable|image|mimes:jpg,jpeg,png',
-            'foto_kamar_mandi' => 'nullable|image|mimes:jpg,jpeg,png',
-            'foto_lain' => 'nullable|image|mimes:jpg,jpeg,png',
-        ]);
-
-        $data = $request->all();
-        $data['user_id'] = Auth::id();
-
-        // Simpan fasilitas sebagai JSON
-    foreach (['fasilitas_umum','fasilitas_kamar','fasilitas_kamar_mandi','parkir'] as $field) {
-        if(isset($data[$field])) {
-            $data[$field] = json_encode($data[$field]);
-        } else {
-            $data[$field] = json_encode([]);
-        }
-    }
-
-    // Upload foto (contoh untuk foto_depan)
-    if($request->hasFile('foto_depan')){
-        $data['foto_depan'] = $request->file('foto_depan')->store('kos','public');
-    }
-
-    if($request->hasFile('foto_jalan')){
-        $data['foto_jalan'] = $request->file('foto_jalan')->store('kos','public');
-    }
-
-    if($request->hasFile('foto_kamar')){
-        $data['foto_kamar'] = $request->file('foto_kamar')->store('kos','public');
-    }
-
-    if($request->hasFile('foto_kamar_mandi')){
-        $data['foto_kamar_mandi'] = $request->file('foto_kamar_mandi')->store('kos','public');
-    }
-
-    if($request->hasFile('foto_lain')){
-        $data['foto_lain'] = $request->file('foto_lain')->store('kos','public');
-    }
-
-    Kos::create($data);
-
-    return redirect()->route('pemilik.kos.index')->with('success', 'Kos berhasil ditambahkan!');
-}
-
+    // EDIT VIEW
     public function edit($id)
     {
-        $kos = Kos::where('user_id', Auth::id())->findOrFail($id);
-        return view('pemilik.kos.edit', compact('kos'));
+        $kos = Kos::findOrFail($id);
+        return view('kost.edit', compact('kos'));
     }
 
-    public function update(Request $request, $id)
+
+    // =========================
+    // STORE DATA KOS BARU
+    // =========================
+    public function store(Request $request)
     {
-        $kos = Kos::where('user_id', Auth::id())->findOrFail($id);
+        $data = $this->validatedData($request);
 
-       // Ambil semua data
-$data = $request->all();
-
-// Fasilitas (cek semua kolom fasilitas)
-foreach (['fasilitas_umum','fasilitas_kamar','fasilitas_kamar_mandi','parkir'] as $field) {
-    if (isset($data[$field])) {
-        // Kalau array (dari checkbox), langsung pakai array_map trim
-        if (is_array($data[$field])) {
-            $data[$field] = array_map('trim', $data[$field]);
-        }
-        // Kalau string (dari input teks), explode dulu
-        else if (is_string($data[$field])) {
-            $data[$field] = array_map('trim', explode(',', $data[$field]));
-        }
-    } else {
-        $data[$field] = []; // default kosong supaya tidak null
-    }
-}
-
-// Update kos
-$kos->update($data);
-
-
-        return redirect()->route('pemilik.kos.index')->with('success', 'Kos berhasil diperbarui!');
-    }
-
-    public function destroy($id)
-    {
-        $kos = Kos::where('user_id', Auth::id())->findOrFail($id);
-
-        // Hapus semua foto dari storage
-        foreach (['foto_depan','foto_jalan','foto_kamar','foto_kamar_mandi','foto_lain'] as $foto) {
-            if ($kos->$foto && Storage::disk('public')->exists($kos->$foto)) {
-                Storage::disk('public')->delete($kos->$foto);
+        // Handle Upload Foto
+        foreach ($this->fotoFields() as $field) {
+            if ($request->hasFile($field)) {
+                $data[$field] = $request->file($field)->store('kos', 'public');
             }
         }
 
-        $kos->delete();
+        $data['user_id'] = Auth::id();
 
-        return redirect()->route('pemilik.kos.index')->with('success', 'Kos berhasil dihapus!');
+        Kos::create($data);
+
+        return back()->with('success', 'Kost berhasil ditambahkan!');
+    }
+
+
+    // =========================
+    // UPDATE DATA KOS
+    // =========================
+    public function update(Request $request, $id)
+    {
+        $kos = Kos::findOrFail($id);
+        $data = $this->validatedData($request);
+
+        // UPDATE FOTO
+        foreach ($this->fotoFields() as $field) {
+            if ($request->hasFile($field)) {
+
+                // Hapus foto lama
+                if ($kos->$field) {
+                    Storage::disk('public')->delete($kos->$field);
+                }
+
+                // Upload baru
+                $data[$field] = $request->file($field)->store('kos', 'public');
+            }
+        }
+
+        $kos->update($data);
+
+        return back()->with('success', 'Kost berhasil diperbarui!');
+    }
+
+
+    // =========================
+    // VALIDATION (Reusable)
+    // =========================
+    private function validatedData(Request $request)
+    {
+        return $request->validate([
+            // Step 1
+            'nama_kos' => 'required',
+            'tipe' => 'required',
+            'deskripsi' => 'nullable',
+            'catatan' => 'nullable',
+
+            // Step 2
+            'alamat' => 'required',
+            'provinsi' => 'nullable',
+            'kabupaten' => 'nullable',
+            'kecamatan' => 'nullable',
+            'catatan_alamat' => 'nullable',
+            'latitude' => 'nullable',
+            'longitude' => 'nullable',
+
+            // Step 3 Foto
+            'foto_depan' => 'nullable|image|max:2048',
+            'foto_jalan' => 'nullable|image|max:2048',
+            'foto_kamar' => 'nullable|image|max:2048',
+            'foto_kamar_mandi' => 'nullable|image|max:2048',
+            'foto_lain' => 'nullable|image|max:2048',
+
+            // Step 4 Fasilitas (array)
+            'fasilitas_umum' => 'nullable|array',
+            'fasilitas_kamar' => 'nullable|array',
+            'fasilitas_kamar_mandi' => 'nullable|array',
+            'parkir' => 'nullable|array',
+
+            // Step 5
+            'total_kamar' => 'required|integer',
+            'kamar_tersedia' => 'required|integer',
+
+            // Step 6
+            'harga_per_bulan' => 'required|integer',
+            'biaya_tambahan' => 'nullable',
+        ]);
+    }
+
+    // Foto Fields reusable
+    private function fotoFields()
+    {
+        return [
+            'foto_depan',
+            'foto_jalan',
+            'foto_kamar',
+            'foto_kamar_mandi',
+            'foto_lain'
+        ];
     }
 }

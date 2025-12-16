@@ -52,18 +52,4 @@ class KosSearchController extends Controller
             'kos' => $this->filterQuery($request)
         ]);
     }
-
-    public function pencariIndex(Request $request)
-    {
-        return view('pencari.kos.index', [
-            'kos' => $this->filterQuery($request)
-        ]);
-    }
-
-    public function pemilikIndex(Request $request)
-    {
-        return view('pemilik.kos.index', [
-            'kos' => $this->filterQuery($request)
-        ]);
-    }
 }

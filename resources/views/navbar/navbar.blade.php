@@ -1,4 +1,4 @@
- <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
 
 <nav class="navbar" >
   <img src="/img/logo_hitam.png" class="logo">

@@ -1,0 +1,124 @@
+.page-container {
+    padding: 20px 40px;
+}
+
+.page-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.kos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 22px;
+}
+
+.kos-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: 0.25s ease;
+}
+.kos-card:hover {
+    transform: translateY(-4px);
+}
+
+.kos-img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+}
+
+.kos-body {
+    padding: 14px 18px;
+}
+
+.kos-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.kos-location {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.kos-price {
+    font-weight: 700;
+    color: #f47a1f;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.kos-stats {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+/* STATUS BADGE */
+.badge {
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.badge-approved {
+    background: #00ff00;
+    color: #0a8a0a;
+}
+.badge-rejected {
+    background: #ff0000;
+    color: #d30000;
+}
+.badge-pending {
+    background: #adadad;
+    color: #707070;
+}
+
+/* BUTTONS */
+.kos-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background: #f47a1f;
+    border: none;
+    color: white;
+}
+.btn-edit:hover {
+    background: #d86612;
+}
+
+.btn-delete {
+    background: #c02929;
+    border: none;
+    color: white;
+}
+.btn-delete:hover {
+    background: #9f1f1f;
+}
+
+.no-data-box {
+    text-align: center;
+    opacity: 0.7;
+    margin-top: 60px;
+}

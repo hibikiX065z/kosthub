@@ -1,33 +1,36 @@
 @extends('layouts.footer')
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="/css/kost.css" />
-
 @section('content')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <header>
 
-<header>
-    <div class="custom-header">
+        <div class="custom-header">
         <img src="/img/logo_hitam.png" class="logo" alt="Logo">
 
         <div class="d-flex align-items-center" style="gap: 24px;">
+
             <nav class="d-flex align-items-center" style="gap: 10px;">
-                <a href="#">Home</a>
-                <a href="{{ route('pencari.kos.index') }}">Kost</a>
-                <a href="{{ route('pencari.kos.favorites.index') }}">Favorit</a>
-                <a href="#">About</a>
+                <a href="{{ route('pencari.landing') }}">Home</a>
+                <a href="{{ route('pencari.detail_kost') }}">Kost</a>
+                <a href="{{ route('pencari.favorit') }}">Favorit</a>
+                <a href="{{ route('pencari.about') }}">About</a>
             </nav>
 
             <ul class="navbar-nav ms-auto align-items-center">
                 <li class="nav-item dropdown ms-3">
                     <a class="nav-link dropdown-toggle d-flex align-items-center" 
-                       href="#" id="profileDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
+                    href="#" id="profileDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
 
+                        <!-- FOTO PROFIL USER -->
                         <img src="{{ Auth::user()->foto_profil ?? asset('img/default-user.png') }}"
-                             alt="profile" class="rounded-circle"
-                             width="38" height="38" style="object-fit: cover;">
+                            alt="profile"
+                            class="rounded-circle"
+                            width="38" height="38"
+                            style="object-fit: cover;">
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
@@ -52,223 +55,293 @@
             </ul>
 
         </div>
-    </div>
-</header>
 
-<body>
+    </header>
 
-{{-- ======================== SEARCH SECTION ======================== --}}
-<section class="search-section"  style="padding-top: 100px;">
-    <img src="/img/kost8.jpg" class="hero-img" />
-    <h1 class="hero-title">Kost</h1>
+    <body>
 
-    <div class="container">
-        <div class="search-box-wrapper">
-            <div class="search-box">
-                
-                <div class="floating-box">
 
-                    <div>
-                        <div class="left-text">Mau cari kost?</div>
-                        <small>Dapatkan infonya di Kosthub.</small>
-                    </div>
+        <section class="search-section">
+            <img src="img/kost8.jpg" class="hero-img" />
+            <h1 class="hero-title">Kost</h1>
 
-                   {{-- ========== START FORM ========== --}}
-            <form action="{{ route('guest.kos.search') }}" method="GET">
+            <div class="container">
+                <div class="search-box-wrapper">
+                    <div class="search-box">
+                        <div class="d-flex flex-wrap align-items-center gap-3">
 
-                {{-- ========== BAR 1 : SEARCH BAR ========== --}}
-                <div class="input-group mb-4">
-                    <span class="input-group-text bg-white border-end-0">
-                        <i class="bi bi-geo-alt"></i>
-                    </span>
+                            <div class="floating-box">
+                                <div>
+                                    <div class="left-text">Mau cari kost?</div>
+                                    <small>Dapatkan infonya di Kosthub.</small>
+                                </div>
 
-                    <input type="text" 
-                           name="lokasi" 
-                           class="form-control border-start-0"
-                           placeholder="Cari lokasi... contoh: Kudus, Gondangmanis"
-                           value="{{ request('lokasi') }}">
+                                <div class="search-wrapper">
+                                    <form action="{{ route('search.kos') }}" method="GET">
+                                        <div class="input-group custom-input-group">
+                                            <input type="text" name="lokasi" class="form-control custom-search" placeholder="Cari kost...">
+                                            <button type="submit" class="btn custom-btn-search">
+                                                <i class="bi bi-search"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
 
-                    
-                </div>
+                            </div>
 
-                {{-- ========== BAR 2 : FILTERS ========== --}}
-                <div class="row g-3">
-
-                    {{-- TIPE --}}
-                    <div class="col-md-3">
-                        <label class="fw-semibold mb-1 d-block">Tipe Kos</label>
-                        <select name="tipe" class="form-select">
-                            <option value="">Semua</option>
-                            <option value="putra"  {{ request('tipe')=='putra'?'selected':'' }}>Putra</option>
-                            <option value="putri"  {{ request('tipe')=='putri'?'selected':'' }}>Putri</option>
-                            <option value="campur" {{ request('tipe')=='campur'?'selected':'' }}>Campur</option>
-                        </select>
-                    </div>
-
-                    {{-- HARGA MIN --}}
-                    <div class="col-md-3">
-                        <label class="fw-semibold mb-1">Harga Min</label>
-                        <input type="number" 
-                               name="harga_min" 
-                               class="form-control" 
-                               placeholder="0"
-                               value="{{ request('harga_min') }}">
-                    </div>
-
-                    {{-- HARGA MAX --}}
-                    <div class="col-md-3">
-                        <label class="fw-semibold mb-1">Harga Max</label>
-                        <input type="number" 
-                               name="harga_max" 
-                               class="form-control" 
-                               placeholder="5.000.000"
-                               value="{{ request('harga_max') }}">
-                    </div>
-
-                    {{-- FASILITAS --}}
-                    <div class="col-md-12 mt-2">
-                        <label class="fw-semibold mb-2 d-block">Fasilitas</label>
-
-                        <div class="d-flex flex-wrap gap-2">
-
-                            @php 
-                                $facilities = ['WiFi', 'AC', 'Kamar Mandi Dalam', 'Kasur', 'Listrik'];
-                                $selectedFacilities = request('fasilitas') ?: [];
-                            @endphp
-
-                            @foreach ($facilities as $f)
-                                <label class="border rounded-pill px-3 py-1 small"
-                                       style="cursor:pointer; background:#fafafa;">
-                                    <input type="checkbox" 
-                                           name="fasilitas[]" 
-                                           value="{{ $f }}"
-                                           {{ in_array($f, $selectedFacilities) ? 'checked' : '' }}>
-                                    {{ $f }}
-                                </label>
-                            @endforeach
                         </div>
                     </div>
                 </div>
-
-                {{-- BUTTON --}}
-                <button class="btn btn-dark w-100 mt-4 py-2 fs-5">
-                     Cari Kos
-                </button>
-
-            </form>
-
-                </div>
-
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-{{-- ======================== FILTER MODAL ======================== --}}
-<div class="modal fade" id="filterModal" tabindex="-1">
-  <div class="modal-dialog">
-    <form action="{{ route('pencari.kos.search') }}" method="GET" class="modal-content">
+        {{-- Tidak Nutup Konten --}}
+        <div style="height: 20px;"></div>
 
-      <div class="modal-header">
-        <h5 class="modal-title fw-bold">
-            <i class="bi bi-funnel"></i> Filter Pencarian
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+        <section class="listings">
+            <div class="card-grid">
+                @for($i = 0; $i < 12; $i++)
+                    <div class="kost-card">
 
-      <div class="modal-body">
 
-        {{-- TIPE --}}
-        <label class="form-label fw-semibold">Tipe Kos</label>
-        <select name="tipe" class="form-select">
-            <option value="">Semua</option>
-            <option value="putra" {{ request('tipe')=='putra'?'selected':'' }}>Putra</option>
-            <option value="putri" {{ request('tipe')=='putri'?'selected':'' }}>Putri</option>
-            <option value="campur" {{ request('tipe')=='campur'?'selected':'' }}>Campur</option>
-        </select>
+                        <div class="kost-img-container">
+                            <img src="img/kost7.jpg" class="kost-img">
 
-        {{-- MAX PRICE --}}
-        <label class="form-label fw-semibold mt-3">Harga Maksimal</label>
-        <input type="number" name="max_price" class="form-control"
-               placeholder="contoh: 1000000"
-               value="{{ request('max_price') }}">
-
-        {{-- FASILITAS --}}
-        <label class="form-label fw-semibold mt-3">Fasilitas</label>
-        <div class="d-flex flex-wrap gap-2">
-
-          @php $fac = ['WiFi','AC','Kamar Mandi Dalam','Kasur','Listrik']; @endphp
-
-          @foreach ($fac as $f)
-            <label class="border px-3 py-1 rounded-pill">
-              <input type="checkbox" name="fasilitas[]" value="{{ $f }}"
-              {{ request('fasilitas') && in_array($f, request('fasilitas')) ? 'checked' : '' }}>
-              {{ $f }}
-            </label>
-          @endforeach
-
-        </div>
-
-      </div>
-
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-dark w-100">Terapkan Filter</button>
-      </div>
-
-    </form>
-  </div>
-</div>
-
-{{-- ======================== LISTING SECTION ======================== --}}
-<section class="listings">
-    <div class="card-grid">
-
-        @for($i = 0; $i < 12; $i++)
-            <div class="kost-card">
-
-                <div class="kost-img-container">
-                    <img src="/img/kost7.jpg" class="kost-img">
-                    <span class="badge-putra">Putra</span>
-                    <span class="love-icon"><i class="fa-regular fa-heart"></i></span>
-                </div>
-
-                <div class="kost-content">
-
-                    <div class="title-row">
-                        <h3>Indah Kost</h3>
-                        <div class="rating">⭐ <span>3.5</span></div>
-                    </div>
-
-                    <div class="location">
-                        <i class="fa-solid fa-location-dot"></i> Gribig, Kudus
-                    </div>
-
-                    <div class="facilities">
-                        <span class="tag">Wifi</span>
-                        <span class="tag">Ac</span>
-                        <span class="tag">Listrik</span>
-                        <span class="tag">+5 lainnya</span>
-                    </div>
-
-                    <hr class="divider">
-
-                    <div class="price-row">
-                        <div class="price-box">
-                            <span class="price">Rp 1.000.000</span><br>
-                            <span class="perbulan">per bulan</span>
+                            <span class="badge-putra">Putra</span>
+                            <span class="love-icon"><i class="fa-regular fa-heart"></i></span>
                         </div>
 
-                        <button class="btn-lihat">
-                            <i class="fa-regular fa-eye"></i> Lihat
+
+                        <div class="kost-content">
+
+                            <div class="title-row">
+                                <h3>Indah Kost</h3>
+
+                                <div class="rating">
+                                    ⭐ <span>3.5</span>
+                                </div>
+                            </div>
+
+                            <div class="location">
+                                <i class="fa-solid fa-location-dot"></i>Gribig, Kudus
+                            </div>
+
+                            <div class="facilities">
+                                <span class="tag">Wifi</span>
+                                <span class="tag">Ac</span>
+                                <span class="tag">Listrik</span>
+                                <span class="tag">+5 lainnya</span>
+                            </div>
+
+                            <hr class="divider">
+
+                            <div class="price-row">
+                                <div class="price-box">
+                                    <span class="price">Rp 1.000.000</span><br>
+                                    <span class="perbulan">per bulan</span>
+                                </div>
+
+                                <a href="{{ route('pencari.detail_kost') }}" class="btn-lihat">
+                                    <i class="fa-regular fa-eye"></i>
+                                    Lihat
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                @endfor
+            </div>
+
+        </section>
+
+        <section class="recommend-rek">
+            <div class="rec-section">
+
+                <div class="rec-header">
+                    <h2 class="rec-title">Jelajahi rekomendasi kami</h2>
+
+                    <div class="rec-btn-row">
+                        <button class="rec-btn ">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button class="rec-btn ">
+                            <i class="fa-solid fa-chevron-right"></i>
                         </button>
                     </div>
-
                 </div>
 
-            </div>
-        @endfor
 
-    </div>
-</section>
+
+                <div class="rec-carousel-wrapper">
+                    <div class="rec-carousel-track">
+
+                        @for($i = 0; $i < 12; $i++)
+                            <div class="rec-card">
+                                <div class="rec-img-wrapper">
+                                    <img src="img/kost7.jpg" class="rec-img" />
+
+                                    <span class="rec-like-btn">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </span>
+
+                                    <span class="rec-tag">Putra</span>
+                                </div>
+
+                                <div class="rec-over">
+                                    <div class="rec-info-row">
+                                    <h4 class="rec-name">Indah Kost</h4>
+
+                                    <div class="rec-rating">
+                                        <i class="fa-solid fa-star"></i> 3.5
+                                    </div>
+                                </div>
+
+
+                                <div class="rec-footer">
+                                    <div class="rec-price">
+                                        Rp 1.000.000 
+                                        <span class="rec-price-sub">per bulan</span>
+                                    </div>
+
+                                    <a href="{{ route('pencari.detail_kost') }}" class="rec-view-btn">
+                                         <i class="fa-regular fa-eye"></i> Lihat
+                                    </a>
+                                </div>
+
+                                </div>
+
+                                
+                            </div>
+                        @endfor
+
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+
+
+        <script>
+            const track = document.querySelector(".rec-carousel-track");
+            const prevBtn = document.querySelector(".rec-btn-row .rec-btn:first-child");
+            const nextBtn = document.querySelector(".rec-btn-row .rec-btn:last-child");
+
+            let index = 0;
+            let cardWidth = 300;
+
+            function updateCarousel() {
+                const maxIndex = track.children.length - 3;
+                index = Math.max(0, Math.min(index, maxIndex));
+                track.style.transition = "0.3s ease";
+                track.style.transform = `translateX(-${index * cardWidth}px)`;
+            }
+
+          
+            nextBtn.addEventListener("click", () => {
+                index++;
+                updateCarousel();
+            });
+
+            prevBtn.addEventListener("click", () => {
+                index--;
+                updateCarousel();
+            });
+
+            
+            let isDragging = false;
+            let startX = 0;
+            let prevTranslate = 0;
+            let currentTranslate = 0;
+
+            function getTranslateX() {
+                let matrix = window.getComputedStyle(track).transform;
+                if (matrix === "none") return 0;
+                return parseFloat(matrix.split(",")[4]);
+            }
+
+            track.addEventListener("mousedown", (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                prevTranslate = getTranslateX();
+                track.style.transition = "none";
+            });
+
+            document.addEventListener("mousemove", (e) => {
+                if (!isDragging) return;
+                const movement = e.clientX - startX;
+                currentTranslate = prevTranslate + movement;
+                track.style.transform = `translateX(${currentTranslate}px)`;
+            });
+
+            document.addEventListener("mouseup", () => {
+                if (!isDragging) return;
+                isDragging = false;
+
+                let currentX = getTranslateX();
+                index = Math.round(Math.abs(currentX) / cardWidth);
+
+                updateCarousel();
+            });
+
+           
+            track.addEventListener("touchstart", (e) => {
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                prevTranslate = getTranslateX();
+                track.style.transition = "none";
+            });
+
+            track.addEventListener("touchmove", (e) => {
+                if (!isDragging) return;
+                const movement = e.touches[0].clientX - startX;
+                currentTranslate = prevTranslate + movement;
+                track.style.transform = `translateX(${currentTranslate}px)`;
+            });
+
+            track.addEventListener("touchend", () => {
+                if (!isDragging) return;
+                isDragging = false;
+
+                let currentX = getTranslateX();
+                index = Math.round(Math.abs(currentX) / cardWidth);
+
+                updateCarousel();
+            });
+        </script>
+
+
+
+    </body>
+
 
 @endsection
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.love-icon').forEach(icon => {
+        icon.addEventListener('click', function() {
+            this.classList.toggle('active');
+            this.querySelector('i').classList.toggle('fa-regular');
+            this.querySelector('i').classList.toggle('fa-solid');
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.rec-like-btn').forEach(icon => {
+        icon.addEventListener('click', function() {
+            this.classList.toggle('active');
+            this.querySelector('i').classList.toggle('fa-regular');
+            this.querySelector('i').classList.toggle('fa-solid');
+        });
+    });
+});
+
+
+
+</script>
