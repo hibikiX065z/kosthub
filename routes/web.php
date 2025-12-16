@@ -101,12 +101,16 @@ Route::middleware(['auth', 'role:pencari'])
 // ======================
 // ROLE: ADMIN
 // ======================
-Route::middleware(['auth', 'role:admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-    });
+// ======================
+// ROLE: ADMIN
+// ======================
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('dashboard.admin');
+     Route::post('/logout', function() {
+            Auth::logout();
+            return redirect('/'); // arahkan ke landing page
+            })->name('logout');
+});
 
 
 // ======================
