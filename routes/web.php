@@ -12,7 +12,7 @@ use App\Http\Controllers\PemilikController;
 // ======================
 // ROOT
 // ======================
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
@@ -27,7 +27,17 @@ Route::get('/pencari.profile', function () {
 // Tambahan jika Anda butuh route About
 Route::get('/about', function () {
     return view('about');
+})->name('about');
+// ABOUT UNTUK PENCARI
+Route::get('pencari/about', function () {
+    return view('pencari.about');
 })->name('pencari.about');
+
+// ABOUT UNTUK PEMILIK
+Route::get('pemilik/about', function () {
+    return view('pemilik.about');
+})->name('pemilik.about');
+
 
 Route::get('/pencari.detail_kost', function () {
     return view('pencari.detail_kost');

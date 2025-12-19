@@ -16,11 +16,11 @@ class AdminController extends Controller
     {
         return view('dashboard.admin', [
             'title' => 'Dashboard Admin',
-            'jumlahPengguna' => User::whereIn('role', ['pencari', 'pemilik'])->count(),
-            'kosAktif' => Kos::where('status', 'approved')->count(),
-            'jumlahVerifikasi' => Kos::whereIn('status', ['approved', 'rejected'])->count(),
-            'aktivitas' => Aktivitas::latest()->limit(10)->get(),
-            'menungguVerifikasi' => Kos::where('status', 'pending')->count(),
+            // 'jumlahPengguna' => User::whereIn('role', ['pencari', 'pemilik'])->count(),
+            // 'kosAktif' => Kos::where('status', 'approved')->count(),
+            // 'jumlahVerifikasi' => Kos::whereIn('status', ['approved', 'rejected'])->count(),
+            // 'aktivitas' => Aktivitas::latest()->limit(10)->get(),
+            // 'menungguVerifikasi' => Kos::where('status', 'pending')->count(),
         ]);
     }
 
