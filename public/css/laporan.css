@@ -1,0 +1,163 @@
+/* ===============================
+   MAIN CONTENT
+================================ */
+.main-content {
+    padding: 20px 40px;
+    background: #f5f6fa;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.activity-header {
+    background: #fff;
+    border-radius: 18px;
+    padding: 20px 26px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    margin-bottom: 22px;
+}
+
+.activity-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.activity-header p {
+    color: #777;
+    font-size: 14px;
+}
+
+/* ===============================
+   WRAPPER CARD
+================================ */
+.activity-wrapper {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-height: calc(100vh - 160px);
+}
+
+/* ===============================
+   FILTER
+================================ */
+.activity-filter {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.activity-filter select {
+    padding: 10px 16px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    background: #fff;
+}
+
+/* ===============================
+   CHART
+================================ */
+.report-chart {
+    background: #fafafa;
+    border-radius: 14px;
+    padding: 18px;
+    flex-shrink: 0;
+    margin-top: -20px;
+}
+
+/* ===============================
+   REPORT SUMMARY (Bawah Grafik)
+================================ */
+.report-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: -60px;
+}
+
+/* BOX */
+.report-box {
+    background: #fafafa;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* TEXT */
+.report-box strong {
+    font-size: 15px;
+    display: block;
+}
+
+.report-box span {
+    font-size: 13px;
+    color: #666;
+}
+
+/* ITEM */
+.activity-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 6px;
+    border-bottom: 1px solid #eee;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-item:hover {
+    background: #fafafa;
+}
+
+/* ICON */
+.activity-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    margin-right: 14px;
+}
+
+.icon-login { background: #22c55e; }
+.icon-add { background: #f97316; }
+.icon-favorite { background: #facc15; }
+
+/* CONTENT */
+.activity-info {
+    flex: 1;
+}
+
+.activity-info strong {
+    font-size: 15px;
+    display: block;
+}
+
+.activity-info p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* VALUE */
+.activity-time {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    white-space: nowrap;
+}
