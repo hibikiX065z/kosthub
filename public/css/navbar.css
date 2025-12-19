@@ -134,3 +134,16 @@
     right: 0;
     z-index: 9999 !important;
 }
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Logo kiri, Menu tengah, Dropdown kanan */
+    align-items: center;
+    padding: 10px 5%;
+    background: white;
+}
+
+.custom-header {
+    flex: 1; /* Mengambil sisa ruang agar bisa menengahkan menu */
+    display: flex;
+    justify-content: center;
+}

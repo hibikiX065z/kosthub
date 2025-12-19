@@ -1,99 +1,104 @@
-@extends('layouts.footer')
+@extends('layouts.main')
+
+@section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="/css/kost.css" />
-@section('content')
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <header>
 
-        <div class="custom-header">
-        <img src="/img/logo_hitam.png" class="logo" alt="Logo">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <div class="d-flex align-items-center" style="gap: 24px;">
+   
 
-            <nav class="d-flex align-items-center" style="gap: 10px;">
-                <a href="{{ route('pencari.landing') }}">Home</a>
-                <a href="{{ route('pencari.detail_kost') }}">Kost</a>
-                <a href="{{ route('pencari.favorit') }}">Favorit</a>
-                <a href="{{ route('pencari.about') }}">About</a>
-            </nav>
 
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item dropdown ms-3">
-                    <a class="nav-link dropdown-toggle d-flex align-items-center" 
-                    href="#" id="profileDropdown" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-
-                        <!-- FOTO PROFIL USER -->
-                        <img src="{{ Auth::user()->foto_profil ?? asset('img/default-user.png') }}"
-                            alt="profile"
-                            class="rounded-circle"
-                            width="38" height="38"
-                            style="object-fit: cover;">
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
-                        <li>
-                            <a class="dropdown-item" href="{{ route('pencari.profile') }}">
-                                <i class="bi bi-person-circle me-2"></i> Profil
-                            </a>
-                        </li>
-
-                        <li><hr class="dropdown-divider"></li>
-
-                        <li>
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-danger">
-                                    <i class="bi bi-box-arrow-right me-2"></i> Logout
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-        </div>
-
-    </header>
-
-    <body>
 
 
         <section class="search-section">
-            <img src="img/kost8.jpg" class="hero-img" />
-            <h1 class="hero-title">Kost</h1>
+    <img src="/img/kost8.jpg" class="hero-img" />
+    <h1 class="hero-title">Kost</h1>
 
-            <div class="container">
-                <div class="search-box-wrapper">
-                    <div class="search-box">
-                        <div class="d-flex flex-wrap align-items-center gap-3">
+    <div class="container">
+        <div class="search-box-wrapper">
 
-                            <div class="floating-box">
-                                <div>
-                                    <div class="left-text">Mau cari kost?</div>
-                                    <small>Dapatkan infonya di Kosthub.</small>
-                                </div>
+            <div class="floating-box">
 
-                                <div class="search-wrapper">
-                                    <form action="{{ route('search.kos') }}" method="GET">
-                                        <div class="input-group custom-input-group">
-                                            <input type="text" name="lokasi" class="form-control custom-search" placeholder="Cari kost...">
-                                            <button type="submit" class="btn custom-btn-search">
-                                                <i class="bi bi-search"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
+                <!-- TEXT KIRI -->
+                <div>
+                    <h6 class="text-searchone mb-0">Mau cari kost?</h6>
+                    <small class="text-mutedtwo">Dapatkan infonya di Kosthub.</small>
                 </div>
+
+                <!-- FORM SEARCH -->
+                <form action="#" method="GET" class="d-flex align-items-center gap-3">
+
+                    <!-- INPUT SEARCH -->
+                    <div class="input-group" style="width: 360px;">
+                        <input type="text"
+                               name="lokasi"
+                               class="form-control"
+                               placeholder="Cari berdasarkan lokasi...">
+                        <span class="input-group-text bg-white">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                    </div>
+
+                    <!-- FILTER BUTTON -->
+                    <button type="button"
+                            id="openFilter"
+                            class="btn btn-light border shadow-sm">
+                        <i class="fa-solid fa-filter"></i>
+                    </button>
+
+                </form>
+
             </div>
-        </section>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+        <!-- Overlay Gelap -->
+        <div id="filterOverlay" class="filter-overlay"></div>
+
+        <!-- Sidebar Filter -->
+        <div id="filterSidebar" class="filter-sidebar">
+            <div class="filter-header">
+                <h4>Filter</h4>
+                <button id="closeFilter" class="close-btn">&times;</button>
+            </div>
+
+            <form action="welcome" method="GET">
+                <label>Lokasi</label>
+                <input type="text" name="lokasi" class="form-control" placeholder="Cari lokasi…">
+
+                <label class="mt-3">Harga</label>
+                <div class="d-flex gap-2">
+                    <input type="number" name="harga_min" class="form-control" placeholder="Minimal">
+                    <input type="number" name="harga_max" class="form-control" placeholder="Maksimal">
+                </div>
+
+                <label class="mt-3">Tipe Kost</label>
+                <select name="tipe" class="form-control">
+                    <option value="">All</option>
+                    <option value="putra">Putra</option>
+                    <option value="putri">Putri</option>
+                    <option value="campur">Campur</option>
+                </select>
+
+                <label class="mt-3">Facility</label>
+                <div class="facility-list">
+                    <label><input type="checkbox" name="fasilitas[]" value="AC"> Air conditioning</label>
+                    <label><input type="checkbox" name="fasilitas[]" value="WiFi"> WiFi</label>
+                    <label><input type="checkbox" name="fasilitas[]" value="Kamar Mandi Dalam"> En-suite Bathroom</label>
+                    <label><input type="checkbox" name="fasilitas[]" value="Meja"> Cupboard / Table</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-4">Terapkan</button>
+            </form>
+        </div>
+
 
         {{-- Tidak Nutup Konten --}}
         <div style="height: 20px;"></div>
@@ -190,28 +195,28 @@
 
                                 <div class="rec-over">
                                     <div class="rec-info-row">
-                                    <h4 class="rec-name">Indah Kost</h4>
+                                        <h4 class="rec-name">Indah Kost</h4>
 
-                                    <div class="rec-rating">
-                                        <i class="fa-solid fa-star"></i> 3.5
-                                    </div>
-                                </div>
-
-
-                                <div class="rec-footer">
-                                    <div class="rec-price">
-                                        Rp 1.000.000 
-                                        <span class="rec-price-sub">per bulan</span>
+                                        <div class="rec-rating">
+                                            <i class="fa-solid fa-star"></i> 3.5
+                                        </div>
                                     </div>
 
-                                    <a href="{{ route('pencari.detail_kost') }}" class="rec-view-btn">
-                                         <i class="fa-regular fa-eye"></i> Lihat
-                                    </a>
-                                </div>
+
+                                    <div class="rec-footer">
+                                        <div class="rec-price">
+                                            Rp 1.000.000
+                                            <span class="rec-price-sub">per bulan</span>
+                                        </div>
+
+                                        <a href="{{ route('pencari.detail_kost') }}" class="rec-view-btn">
+                                            <i class="fa-regular fa-eye"></i> Lihat
+                                        </a>
+                                    </div>
 
                                 </div>
 
-                                
+
                             </div>
                         @endfor
 
@@ -239,7 +244,7 @@
                 track.style.transform = `translateX(-${index * cardWidth}px)`;
             }
 
-          
+
             nextBtn.addEventListener("click", () => {
                 index++;
                 updateCarousel();
@@ -250,7 +255,7 @@
                 updateCarousel();
             });
 
-            
+
             let isDragging = false;
             let startX = 0;
             let prevTranslate = 0;
@@ -286,7 +291,7 @@
                 updateCarousel();
             });
 
-           
+
             track.addEventListener("touchstart", (e) => {
                 isDragging = true;
                 startX = e.touches[0].clientX;
@@ -314,34 +319,51 @@
 
 
 
-    </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.love-icon').forEach(icon => {
+            icon.addEventListener('click', function () {
+                this.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-regular');
+                this.querySelector('i').classList.toggle('fa-solid');
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.rec-like-btn').forEach(icon => {
+            icon.addEventListener('click', function () {
+                this.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-regular');
+                this.querySelector('i').classList.toggle('fa-solid');
+            });
+        });
+    });
+
+   
+</script>
+
+ <script>
+document.getElementById("openFilter").addEventListener("click", () => {
+            document.getElementById("filterSidebar").classList.add("active");
+        document.getElementById("filterOverlay").style.display = "block";
+});
+
+document.getElementById("closeFilter").addEventListener("click", () => {
+            document.getElementById("filterSidebar").classList.remove("active");
+        document.getElementById("filterOverlay").style.display = "none";
+});
+
+document.getElementById("filterOverlay").addEventListener("click", () => {
+            document.getElementById("filterSidebar").classList.remove("active");
+        document.getElementById("filterOverlay").style.display = "none";
+});
+</script>
+
+
 
 
 @endsection
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('.love-icon').forEach(icon => {
-        icon.addEventListener('click', function() {
-            this.classList.toggle('active');
-            this.querySelector('i').classList.toggle('fa-regular');
-            this.querySelector('i').classList.toggle('fa-solid');
-        });
-    });
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('.rec-like-btn').forEach(icon => {
-        icon.addEventListener('click', function() {
-            this.classList.toggle('active');
-            this.querySelector('i').classList.toggle('fa-regular');
-            this.querySelector('i').classList.toggle('fa-solid');
-        });
-    });
-});
-
-
-
-</script>

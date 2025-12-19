@@ -72,104 +72,81 @@
 
 
    {{-- ======================== SEARCH SECTION ======================== --}}
-<section class="landing-search" style="padding-bottom: 70px;">
-    <div class="container">
-        <div class="card shadow p-4" style="border-radius: 20px;">
 
-            {{-- TITLE SMALL --}}
-            <div class="mb-3">
-                <h5 class="fw-bold m-0">Mau cari kost?</h5>
-                <small class="text-muted">Temukan kost terbaikmu di Kosthub.</small>
+<section class="search-section">
+            <div class="container">
+                <div class="search-box-wrapper">
+                    <div class="search-box">
+                        <form action="" method="GET" class="d-flex flex-wrap align-items-center gap-3">
+
+                            <div class="flex-grow-1">
+                                <h6 class="text-searchone">Mau cari kost?</h6>
+                                <small class="text-mutedtwo">
+                                    Dapatkan infonya di Kosthub.
+                                </small>
+                            </div>
+
+                            <!-- Input + Icon Search -->
+                            <div class="input-group w-auto">
+
+                                <input type="text" name="lokasi" class="form-control"
+                                    placeholder="Cari berdasarkan lokasi...">
+                                <span class="input-group-text bg-white">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #000;"></i>
+                                </span>
+                            </div>
+
+                            <!-- Tombol Filter -->
+                            <button id="openFilter" type="button" class="btn btn-light border shadow-sm">
+                                <i class="fa-solid fa-filter" style="opacity:0.6;"></i>
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overlay Gelap -->
+        <div id="filterOverlay" class="filter-overlay"></div>
+
+        <!-- Sidebar Filter -->
+        <div id="filterSidebar" class="filter-sidebar">
+            <div class="filter-header">
+                <h4>Filter</h4>
+                <button id="closeFilter" class="close-btn">&times;</button>
             </div>
 
-            {{-- ========== START FORM ========== --}}
+            <form action="welcome" method="GET">
+                <label>Lokasi</label>
+                <input type="text" name="lokasi" class="form-control" placeholder="Cari lokasi…">
 
-                {{-- ========== BAR 1 : SEARCH BAR ========== --}}
-                <div class="input-group mb-4">
-                    <span class="input-group-text bg-white border-end-0">
-                        <i class="bi bi-geo-alt"></i>
-                    </span>
-
-                    <input type="text" 
-                           name="lokasi" 
-                           class="form-control border-start-0"
-                           placeholder="Cari lokasi... contoh: Kudus, Gondangmanis"
-                           value="{{ request('lokasi') }}">
-
-                    
+                <label class="mt-3">Harga</label>
+                <div class="d-flex gap-2">
+                    <input type="number" name="harga_min" class="form-control" placeholder="Minimal">
+                    <input type="number" name="harga_max" class="form-control" placeholder="Maksimal">
                 </div>
 
-                {{-- ========== BAR 2 : FILTERS ========== --}}
-                <div class="row g-3">
+                <label class="mt-3">Tipe Kost</label>
+                <select name="tipe" class="form-control">
+                    <option value="">All</option>
+                    <option value="putra">Putra</option>
+                    <option value="putri">Putri</option>
+                    <option value="campur">Campur</option>
+                </select>
 
-                    {{-- TIPE --}}
-                    <div class="col-md-3">
-                        <label class="fw-semibold mb-1 d-block">Tipe Kos</label>
-                        <select name="tipe" class="form-select">
-                            <option value="">Semua</option>
-                            <option value="putra"  {{ request('tipe')=='putra'?'selected':'' }}>Putra</option>
-                            <option value="putri"  {{ request('tipe')=='putri'?'selected':'' }}>Putri</option>
-                            <option value="campur" {{ request('tipe')=='campur'?'selected':'' }}>Campur</option>
-                        </select>
-                    </div>
-
-                    {{-- HARGA MIN --}}
-                    <div class="col-md-3">
-                        <label class="fw-semibold mb-1">Harga Min</label>
-                        <input type="number" 
-                               name="harga_min" 
-                               class="form-control" 
-                               placeholder="0"
-                               value="{{ request('harga_min') }}">
-                    </div>
-
-                    {{-- HARGA MAX --}}
-                    <div class="col-md-3">
-                        <label class="fw-semibold mb-1">Harga Max</label>
-                        <input type="number" 
-                               name="harga_max" 
-                               class="form-control" 
-                               placeholder="5.000.000"
-                               value="{{ request('harga_max') }}">
-                    </div>
-
-                    {{-- FASILITAS --}}
-                    <div class="col-md-12 mt-2">
-                        <label class="fw-semibold mb-2 d-block">Fasilitas</label>
-
-                        <div class="d-flex flex-wrap gap-2">
-
-                            @php 
-                                $facilities = ['WiFi', 'AC', 'Kamar Mandi Dalam', 'Kasur', 'Listrik'];
-                                $selectedFacilities = request('fasilitas') ?: [];
-                            @endphp
-
-                            @foreach ($facilities as $f)
-                                <label class="border rounded-pill px-3 py-1 small"
-                                       style="cursor:pointer; background:#fafafa;">
-                                    <input type="checkbox" 
-                                           name="fasilitas[]" 
-                                           value="{{ $f }}"
-                                           {{ in_array($f, $selectedFacilities) ? 'checked' : '' }}>
-                                    {{ $f }}
-                                </label>
-                            @endforeach
-                        </div>
-                    </div>
+                <label class="mt-3">Facility</label>
+                <div class="facility-list">
+                    <label><input type="checkbox" name="fasilitas[]" value="AC"> Air conditioning</label>
+                    <label><input type="checkbox" name="fasilitas[]" value="WiFi"> WiFi</label>
+                    <label><input type="checkbox" name="fasilitas[]" value="Kamar Mandi Dalam"> En-suite Bathroom</label>
+                    <label><input type="checkbox" name="fasilitas[]" value="Meja"> Cupboard / Table</label>
                 </div>
 
-                {{-- BUTTON --}}
-                <button class="btn btn-dark w-100 mt-4 py-2 fs-5">
-                     Cari Kos
-                </button>
-
+                <button type="submit" class="btn btn-primary w-100 mt-4">Terapkan</button>
             </form>
-            {{-- ========== END FORM ========== --}}
-
         </div>
-    </div>
-</section>
-
 
 
     {{-- ======================== KOST TREE SECTION ======================== --}}
@@ -307,4 +284,22 @@
     </section>
 
 </div>
+
+
+   <script>
+document.getElementById("openFilter").addEventListener("click", () => {
+    document.getElementById("filterSidebar").classList.add("active");
+    document.getElementById("filterOverlay").style.display = "block";
+});
+
+document.getElementById("closeFilter").addEventListener("click", () => {
+    document.getElementById("filterSidebar").classList.remove("active");
+    document.getElementById("filterOverlay").style.display = "none";
+});
+
+document.getElementById("filterOverlay").addEventListener("click", () => {
+    document.getElementById("filterSidebar").classList.remove("active");
+    document.getElementById("filterOverlay").style.display = "none";
+});
+</script>
 @endsection

@@ -357,6 +357,57 @@
 
 
 
+/* Overlay hitam */
+.filter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    z-index: 999;
+}
+
+/* Sidebar Filter */
+.filter-sidebar {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 350px;
+    height: 100%;
+    background: white;
+    padding: 25px;
+    box-shadow: -3px 0px 8px rgba(0, 0, 0, 0.15);
+    transition: 0.35s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    border-radius: 12px 0 0 12px;
+}
+
+.filter-sidebar.active {
+    right: 0;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.facility-list label {
+    display: block;
+    margin-bottom: 6px;
+}
+
 
 
 

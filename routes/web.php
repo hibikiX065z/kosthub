@@ -12,9 +12,27 @@ use App\Http\Controllers\PemilikController;
 // ======================
 // ROOT
 // ======================
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
+})->name('home');
+
+Route::get('/pencari.landing', function () {
+    return view('pencari.landing');
+})->name('pencari.landing');
+
+Route::get('/pencari.profile', function () {
+    return view('pencari.profile');
+})->name('pencari.profile');
+
+// Tambahan jika Anda butuh route About
+Route::get('/about', function () {
+    return view('about');
+})->name('pencari.about');
+
+Route::get('/pencari.detail_kost', function () {
+    return view('pencari.detail_kost');
 });
+
 
 // ======================
 // AUTH ROUTES
@@ -31,54 +49,54 @@ Route::post('/logout', function () {
 // ======================
 // REGISTER
 // ======================
-Route::prefix('register')->group(function () {
-    Route::get('/pemilik', [AuthController::class, 'showRegisterPemilik'])->name('register.pemilik');
-    Route::post('/pemilik', [AuthController::class, 'registerPemilik'])->name('register.pemilik.post');
+// Route::prefix('register')->group(function () {
+//     Route::get('/pemilik', [AuthController::class, 'showRegisterPemilik'])->name('register.pemilik');
+//     Route::post('/pemilik', [AuthController::class, 'registerPemilik'])->name('register.pemilik.post');
 
-    Route::get('/pencari', [AuthController::class, 'showRegisterPencari'])->name('register.pencari');
-    Route::post('/pencari', [AuthController::class, 'registerPencari'])->name('register.pencari.post');
-});
+//     Route::get('/pencari', [AuthController::class, 'showRegisterPencari'])->name('register.pencari');
+//     Route::post('/pencari', [AuthController::class, 'registerPencari'])->name('register.pencari.post');
+// });
 
 
 // ======================
 // ROLE: PEMILIK
 // ======================
-Route::middleware(['auth', 'role:pemilik'])->group(function () {
+    // Route::middleware(['auth', 'role:pemilik'])->group(function () {
 
-    Route::get('/pemilik', function () {
-        return view('pemilik.landing');
-    })->name('pemilik.landing');
+    //     Route::get('/pemilik', function () {
+    //         return view('pemilik.landing');
+    //     })->name('pemilik.landing');
 
-    Route::get('/pemilik/edit-kos', function () {
-        return view('pemilik.edit-kos');
-    })->name('pemilik.edit-kos');
+    //     Route::get('/pemilik/edit-kos', function () {
+    //         return view('pemilik.edit-kos');
+    //     })->name('pemilik.edit-kos');
 
-    Route::get('/pemilik/profile', [AuthController::class, 'profilePemilik'])
-        ->name('pemilik.profile');
+    //     Route::get('/pemilik/profile', [AuthController::class, 'profilePemilik'])
+    //         ->name('pemilik.profile');
 
-    // =======================
-    // MANAGE DATA KOS (PEMILIK)
-    // =======================
-    
-    // List kos milik pemilik
-    Route::get('/pemilik/kos', [PemilikController::class, 'index'])->name('pemilik.kost');
+    //     // =======================
+    //     // MANAGE DATA KOS (PEMILIK)
+    //     // =======================
+        
+    //     // List kos milik pemilik
+    //     Route::get('/pemilik/kos', [PemilikController::class, 'index'])->name('pemilik.kost');
 
-    // Form tambah kos
-    Route::get('/pemilik/kos/tambah', [PemilikController::class, 'create'])->name('pemilik.tambah-kos');
+    //     // Form tambah kos
+    //     Route::get('/pemilik/kos/tambah', [PemilikController::class, 'create'])->name('pemilik.tambah-kos');
 
-    // Submit tambah kos
-    Route::post('/pemilik/kos/store', [PemilikController::class, 'store'])->name('pemilik.kos.store');
+    //     // Submit tambah kos
+    //     Route::post('/pemilik/kos/store', [PemilikController::class, 'store'])->name('pemilik.kos.store');
 
-    // Edit kos
-    Route::get('/pemilik/kos/{id}/edit', [PemilikController::class, 'edit'])->name('pemilik.kos.edit');
+    //     // Edit kos
+    //     Route::get('/pemilik/kos/{id}/edit', [PemilikController::class, 'edit'])->name('pemilik.kos.edit');
 
-    // Update kos
-    Route::put('/pemilik/kos/{id}', [PemilikController::class, 'update'])->name('pemilik.kos.update');
+    //     // Update kos
+    //     Route::put('/pemilik/kos/{id}', [PemilikController::class, 'update'])->name('pemilik.kos.update');
 
-    // Hapus kos
-    Route::delete('/pemilik/kos/{id}', [PemilikController::class, 'destroy'])->name('pemilik.kos.destroy');
+    //     // Hapus kos
+    //     Route::delete('/pemilik/kos/{id}', [PemilikController::class, 'destroy'])->name('pemilik.kos.destroy');
 
-});
+    // });
 
     // PEMILIK KOS SEARCH
     Route::get('/search', [KosController::class, 'search'])->name('kos.search');
